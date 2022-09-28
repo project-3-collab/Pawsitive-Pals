@@ -21,6 +21,7 @@ const petSchema = new Schema({
   link: {
     type: String,
   },
+  // type of animal
   type: {
     type: String,
     required: true,
@@ -29,6 +30,9 @@ const petSchema = new Schema({
     type: String
   },
   age:{
+    type: String
+  },
+  size: {
     type: String
   },
   environment: [

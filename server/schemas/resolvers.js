@@ -35,13 +35,13 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (parent, { authors, description, bookId, image, link, title }, context) => {
+    savePet: async (parent, { petId, name, description, image, link, type, breed, age, size, environments, tags, contact }, context) => {
 
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: { savedBooks: { authors, description, bookId, image, link, title } }
+            $addToSet: { savedPets: { petId, name, description, image, link, type, breed, age, size, environments, tags, contact } }
           },
           { new: true }
         );
@@ -51,13 +51,13 @@ const resolvers = {
 
     },
 
-    deleteBook: async (parent, { _id }, context) => {
+    deletePet: async (parent, { _id }, context) => {
 
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $pull: { savedBooks: { _id:_id } }
+            $pull: { savedPets: { _id:_id } }
           },
           { new: true }
         );

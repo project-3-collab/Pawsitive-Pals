@@ -6,17 +6,30 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    savedBooks: [Book]
+    name: [String]
+    address: [String]
+    phone: String
+    license: String
+    age: String
+    experience: String
+    housing: String
+    savedPets: [Pet]
   }
 
-  type Book {
+  type Pet {
     _id: ID!
-    bookId: String
-    authors: [String]
+    petId: String
+    name: String
     description: String
     image: String
     link: String
-    title: String
+    type: String
+    breed: String
+    age: String
+    size: String
+    environment: [String]
+    tags: [String]
+    contact: [String]
   }
 
   type Auth {
