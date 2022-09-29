@@ -43,7 +43,7 @@ const userSchema = new Schema(
     experience: {
       type: String
     },
-    home: {
+    housing: {
       type: String
     },
    
