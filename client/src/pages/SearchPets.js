@@ -123,8 +123,8 @@ const SearchPets = () => {
                   <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{pet.type}</Card.Title>
-                  <p className='small'>Name: {pet.name}</p>
+                  <Card.Title>{pet.name}</Card.Title>
+                  <p className='small'>Type: {pet.type}</p>
                   <Card.Text>{pet.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
