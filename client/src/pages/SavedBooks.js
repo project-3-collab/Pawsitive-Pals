@@ -2,8 +2,6 @@ import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap
 
 import Auth from '../utils/auth';
 
-import { removeBookId } from '../utils/localStorage';
-import { DELETE_BOOK } from '../utils/mutations'
 import { QUERY_USER } from '../utils/queries'
 import { useMutation, useQuery } from '@apollo/client'
 
@@ -13,7 +11,7 @@ const SavedBooks = () => {
     variables: { _id: Auth.getProfile().data._id }
   });
 
-  const [ deleteBook ] = useMutation(DELETE_BOOK);
+
 
   const userData = data?.user ;
 
@@ -34,7 +32,7 @@ const SavedBooks = () => {
 
       console.log(deletedBook)
 
-      removeBookId(book.bookId);
+      
     } catch (err) {
       console.error(err);
     }
