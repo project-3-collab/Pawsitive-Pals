@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-// import { searchGoogleBooks } from '../utils/API';
+import { searchPetfinder } from '../utils/API';
 import { savePetIds, getSavedPetIds } from '../utils/localStorage';
 import { ADD_PET } from '../utils/mutations'
 import { useMutation } from '@apollo/client'
@@ -33,22 +33,19 @@ const SearchPets = () => {
     }
 
     try {
-      // need to add petfinder API here
-      // const response = await searchGoogleBooks(searchInput);
+      const response = await searchPetfinder(searchInput);
+      console.log(response, "line 37");
+      console.log(response.animals, "line 38");
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const { items } = await response.json();
-// Need to insert API data here
-      // const petData = items.map((pet) => ({
-      //   petId: pet.id,
-      //   authors: pet.volumeInfo.authors || ['No author to display'],
-      //   title: pet.volumeInfo.title,
-      //   description: pet.volumeInfo.description,
-      //   image: pet.volumeInfo.imageLinks?.thumbnail || '',
-      // }));
+      const petData = response.animals.map((pet) => ({
+        petId: pet.id,
+        name: pet.name || ['No name to display'],
+        type: pet.type,
+        description: pet.description,
+        image: pet.primary_photo_cropped?.full || '',
+        link: pet.url,
+      }));
+      petData.forEach((d) => console.log(d));
 
       setSearchedPets(petData);
       setSearchInput('');
@@ -123,11 +120,11 @@ const SearchPets = () => {
             return (
               <Card key={pet.petId} border='dark'>
                 {pet.image ? (
-                  <Card.Img src={pet.image} alt={`The cover for ${pet.title}`} variant='top' />
+                  <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{pet.title}</Card.Title>
-                  <p className='small'>Authors: {pet.authors}</p>
+                  <Card.Title>{pet.name}</Card.Title>
+                  <p className='small'>Type: {pet.type}</p>
                   <Card.Text>{pet.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button

@@ -49,23 +49,23 @@ const SavedPets = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Viewing your favorite animals!</h1>
+          <h1>Viewing saved Pets!</h1>
         </Container>
       </Jumbotron>
       <Container>
         <h2>
           {userData.savedPets.length
             ? `Viewing ${userData.savedPets.length} saved ${userData.savedPets.length === 1 ? 'pet' : 'pets'}:`
-            : 'You have no saved favorite animals!'}
+            : 'You have no saved pets!'}
         </h2>
         <CardColumns>
           {userData.savedPets.map((pet) => {
             return (
               <Card key={pet.petId} border='dark'>
-                {pet.image ? <Card.Img src={pet.image} alt={`A picture of a ${pet.type} named ${pet.name}`} variant='top' /> : null}
+                {pet.image ? <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' /> : null}
                 <Card.Body>
                   <Card.Title>{pet.name}</Card.Title>
-                  <p className='small'>This is a {pet.age} {pet.breed} {pet.type}.</p>
+                  <p className='small'>Type: {pet.type}</p>
                   <Card.Text>{pet.description}</Card.Text>
                   <Button className='btn-block btn-danger' onClick={() => handleDeletePet(pet)}>
                     Delete this Pet!
