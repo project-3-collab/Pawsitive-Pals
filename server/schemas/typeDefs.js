@@ -12,15 +12,15 @@ const typeDefs = gql`
     license: String
     age: String
     experience: String
-    home: String
+    housing: String
     savedPets: [Pet]
   }
 
   type Pet {
     _id: ID!
     name: [String]
-    description: String
     petId: String
+    description: String
     image: String
     link: String
     type: String

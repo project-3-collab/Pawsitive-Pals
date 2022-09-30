@@ -43,6 +43,7 @@ const resolvers = {
           { _id: context.user._id },
           {
             $addToSet: { savedPets: { name, description, petId, image, link, type } }
+
           },
           { new: true }
         );
