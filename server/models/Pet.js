@@ -11,8 +11,8 @@ const petSchema = new Schema({
     required: true,
   },
   // saved pet id from petfinder
-  id: {
-    type: Integer,
+  petId: {
+    type: String,
     required: true,
   },
   image: {
