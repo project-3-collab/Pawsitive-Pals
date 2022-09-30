@@ -26,6 +26,9 @@ const userSchema = new Schema(
         type: String,
       }
     ],
+    admin: {
+      type: Boolean
+    },
     address: [
       {
         type: String
