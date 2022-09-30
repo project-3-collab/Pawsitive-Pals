@@ -7,6 +7,7 @@ import { fetchAllAnimals } from "./utils/API"
 
 fetchAllAnimals();
 
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

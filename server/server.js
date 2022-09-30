@@ -2,38 +2,6 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 require('dotenv').config();
 const path = require('path');
-const axios = require('axios');
-const qs = require('qs');
-
-const fetchAnimals = async () => {
-
-  const data = qs.stringify({
-    'grant_type': 'client_credentials',
-    'client_id': process.env.API_KEY,
-    'client_secret': process.env.SECRET,
-  });
-  const postConfig = {
-    method: 'post',
-    url: 'https://api.petfinder.com/v2/oauth2/token',
-    headers: { 
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data : data
-  };
-  const tokenData = await axios.post(postConfig.url,postConfig.data,postConfig.headers);
-  console.log(tokenData.data.access_token)
-  const getConfig = {
-    method: 'get',
-    url: 'https://api.petfinder.com/v2/animals/57674252',
-    headers: { 
-      'Authorization': `Bearer ${tokenData.data.access_token}`
-    }
-  };
-  const animalsData = await axios.get(getConfig.url, {headers: { 
-    'Authorization': `Bearer ${tokenData.data.access_token}`
-  }});
-  console.log(animalsData.data)
-};
 
 const { typeDefs, resolvers } = require('./schemas');
 // const { authMiddleware } = require('./utils/auth');
