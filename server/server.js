@@ -1,6 +1,32 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+require("dotenv").config();
 const path = require('path');
+const axios = require('axios');
+const qs = require('qs');
+
+const data = qs.stringify({
+  'grant_type': 'client_credentials',
+  'client_id': process.env.API_KEY,
+  'client_secret': process.env.SECRET,
+});
+
+const config = {
+  method: 'post',
+  url: 'https://api.petfinder.com/v2/oauth2/token',
+  headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
 
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
