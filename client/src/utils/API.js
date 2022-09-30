@@ -1,3 +1,7 @@
+const axios = require('axios');
+const qs = require('qs');
+require('dotenv').config();
+
 // route to get logged in user's info (needs the token)
 export const getMe = (token) => {
   return fetch('/api/users/me', {
@@ -55,3 +59,25 @@ export const deleteBook = (bookId, token) => {
 export const searchGoogleBooks = (query) => {
   return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
 };
+
+export const fetchAllAnimals = async () => {
+
+  const data = qs.stringify({
+    'grant_type': 'client_credentials',
+    'client_id': process.env.API_KEY,
+    'client_secret': process.env.SECRET,
+  });
+  const postUrl = 'https://api.petfinder.com/v2/oauth2/token';
+  const postHeaders = { 
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
+  const tokenData = await axios.post(postUrl,data,postHeaders);
+  const getUrl = 'https://api.petfinder.com/v2/animals/';
+
+  const allAnimalsData = await axios.get(getUrl, {headers: { 
+    'Authorization': `Bearer ${tokenData.data.access_token}`
+  }});
+  console.log(allAnimalsData)
+  return allAnimalsData;
+};
+
