@@ -1,17 +1,15 @@
 const { Schema } = require('mongoose');
 
 const petSchema = new Schema({
-  name: [
-    {
-      type: String,
-    },
-  ],
-  description: {
+  // saved pet id from petfinder
+  petId: {
     type: String,
     required: true,
   },
-  // saved pet id from petfinder
-  petId: {
+  name: {
+      type: String,
+    },
+  description: {
     type: String,
     required: true,
   },
