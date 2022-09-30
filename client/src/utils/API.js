@@ -1,3 +1,7 @@
+const axios = require('axios');
+const qs = require('qs');
+require('dotenv').config();
+
 // route to get logged in user's info (needs the token)
 export const getMe = (token) => {
   return fetch('/api/users/me', {
@@ -66,3 +70,34 @@ export const searchPetfinder = async (query) => {
     console.log(err);
   }
 };
+
+
+
+export const fetchAllAnimals = async () => {
+
+  const tokenData = await axios.post(
+    'https://api.petfinder.com/v2/oauth2/token', 
+    {
+    'grant_type': 'client_credentials',
+    'client_id': process.env.REACT_APP_API_KEY,
+    'client_secret': process.env.REACT_APP_SECRET,
+    });
+
+  const getConfig = {
+    method: 'get',
+    url: 'https://api.petfinder.com/v2/animals/',
+    headers: {
+      'Authorization': `Bearer ${tokenData.data.access_token}`
+    }
+  };
+  const animalsData = await axios.get(getConfig.url, {
+    headers: {
+      'Authorization': `Bearer ${tokenData.data.access_token}`
+    }
+  });
+
+  console.log(animalsData.data)
+  return animalsData.data;
+
+};
+
