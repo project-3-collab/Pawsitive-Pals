@@ -34,21 +34,18 @@ const SearchPets = () => {
 
     try {
       const response = await searchPetfinder(searchInput);
-      console.log(response);
+      console.log(response, "line 37");
+      console.log(response.animals, "line 38");
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-      const { items } = await response.json();
-
-      const petData = items.map((pet) => ({
+      const petData = response.animals.map((pet) => ({
         petId: pet.id,
-        name: pet.name || ['No author to display'],
+        name: pet.name || ['No name to display'],
         type: pet.type,
         description: pet.description,
         image: pet.primary_photo_cropped?.full || '',
         link: pet.url,
       }));
+      petData.forEach((d) => console.log(d));
 
       setSearchedPets(petData);
       setSearchInput('');
