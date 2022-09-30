@@ -15,6 +15,7 @@ const resolvers = {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
       return { token, user };
+      // return { user };
     },
 
     login: async (parent, { email, password }) => {
@@ -35,13 +36,13 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (parent, { authors, description, bookId, image, link, title }, context) => {
+    savePet: async (parent, { name, description, petId, image, link, type }, context) => {
 
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: { savedBooks: { authors, description, bookId, image, link, title } }
+            $addToSet: { savedPets: { name, description, petId, image, link, type } }
           },
           { new: true }
         );
@@ -51,13 +52,13 @@ const resolvers = {
 
     },
 
-    deleteBook: async (parent, { _id }, context) => {
+    deletePet: async (parent, { _id }, context) => {
 
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $pull: { savedBooks: { _id:_id } }
+            $pull: { savedPets: { _id:_id } }
           },
           { new: true }
         );
