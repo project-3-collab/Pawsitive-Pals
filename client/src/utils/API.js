@@ -63,13 +63,6 @@ export const searchGoogleBooks = (query) => {
 
 
 export const fetchAllAnimals = async () => {
-  const postConfig = {
-    method: 'post',
-    url: 'https://api.petfinder.com/v2/oauth2/token',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-  };
 
   const tokenData = await axios.post(
     'https://api.petfinder.com/v2/oauth2/token', 
