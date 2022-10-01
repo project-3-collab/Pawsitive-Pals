@@ -28,16 +28,15 @@ const AppNavbar = () => {
                   <Nav.Link as={Link} to='/saved'>
                     See Your Pets
                   </Nav.Link>
-                  
                   {Auth.isAdmin() ? (
                     <>
-                    <Nav.Link>
+                    <Nav.Link as={Link} to='/admin'>
                       Admin Page
                     </Nav.Link>
                     </>
                   ) : (
-                    <Nav.Link>
-                      User Page
+                    <Nav.Link as={Link} to='/profile'>
+                      Profile Page
                     </Nav.Link>
                   )
                   }
