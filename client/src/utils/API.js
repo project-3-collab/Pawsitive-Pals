@@ -57,9 +57,17 @@ export const deletePet = (petId, token) => {
 // https://api.petfinder.com/v2/animals?type=dog&page=2
 export const searchPetfinder = async (query) => {
   try {
+    const tokenData = await axios.post(
+      'https://api.petfinder.com/v2/oauth2/token', 
+      {
+      'grant_type': 'client_credentials',
+      'client_id': process.env.REACT_APP_API_KEY,
+      'client_secret': process.env.REACT_APP_SECRET,
+      });
+
     const response = await fetch(`https://api.petfinder.com/v2/animals?type=${query}&page=2`, {
       headers: {
-        'Authorization': 'Bearer <INSERT API TOKEN HERE>'
+        'Authorization': `Bearer ${tokenData.data.access_token}`
       }
     }).then((response) => response.json()).then((data) => {
       return (data);
@@ -72,31 +80,31 @@ export const searchPetfinder = async (query) => {
 
 
 
-export const fetchAllAnimals = async () => {
+// export const fetchAllAnimals = async () => {
 
-  const tokenData = await axios.post(
-    'https://api.petfinder.com/v2/oauth2/token', 
-    {
-    'grant_type': 'client_credentials',
-    'client_id': process.env.REACT_APP_API_KEY,
-    'client_secret': process.env.REACT_APP_SECRET,
-    });
+//   const tokenData = await axios.post(
+//     'https://api.petfinder.com/v2/oauth2/token', 
+//     {
+//     'grant_type': 'client_credentials',
+//     'client_id': process.env.REACT_APP_API_KEY,
+//     'client_secret': process.env.REACT_APP_SECRET,
+//     });
 
-  const getConfig = {
-    method: 'get',
-    url: 'https://api.petfinder.com/v2/animals/',
-    headers: {
-      'Authorization': `Bearer ${tokenData.data.access_token}`
-    }
-  };
-  const animalsData = await axios.get(getConfig.url, {
-    headers: {
-      'Authorization': `Bearer ${tokenData.data.access_token}`
-    }
-  });
+//   const getConfig = {
+//     method: 'get',
+//     url: 'https://api.petfinder.com/v2/animals/',
+//     headers: {
+//       'Authorization': `Bearer ${tokenData.data.access_token}`
+//     }
+//   };
+//   const animalsData = await axios.get(getConfig.url, {
+//     headers: {
+//       'Authorization': `Bearer ${tokenData.data.access_token}`
+//     }
+//   });
 
-  // console.log(animalsData)
-  return animalsData.data;
+//   // console.log(animalsData)
+//   return animalsData.data;
 
-};
+// };
 
