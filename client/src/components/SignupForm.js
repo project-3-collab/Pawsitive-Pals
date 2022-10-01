@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, } from 'react-bootstrap';
 
 import { CREATE_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client'
 
 const SignupForm = () => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '', admin: false});
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -16,8 +16,12 @@ const SignupForm = () => {
   const [createUser] = useMutation(CREATE_USER);
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    const { name, value, checked } = event.target;
+    if (name === "admin") {
+      setUserFormData({ ...userFormData, admin: checked});
+    } else {
+      setUserFormData({ ...userFormData, [name]: value });
+    }
   };
 
   const handleFormSubmit = async (event) => {
@@ -95,6 +99,15 @@ const SignupForm = () => {
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor='admin'>Administrator</Form.Label>
+          <Form.Check 
+            type='switch'
+            id="custom-switch"
+            name='admin'
+            onChange={handleInputChange}
+            />
+        </Form.Group>
         <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'
@@ -102,6 +115,7 @@ const SignupForm = () => {
           Submit
         </Button>
       </Form>
+
     </>
   );
 };
