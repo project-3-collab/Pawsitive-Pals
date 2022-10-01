@@ -15,15 +15,14 @@ const AppNavbar = () => {
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-            Search Pawsitive Pets!
+            Find your Paw pals today!
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
             <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/'>
-                Search For Pets
               </Nav.Link>
-              {/* if user is logged in show saved books and logout */}
+              {/* if user is logged in show saved animals and logout */}
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/saved'>
@@ -45,7 +44,7 @@ const AppNavbar = () => {
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>

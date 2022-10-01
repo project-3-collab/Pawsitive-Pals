@@ -7,6 +7,26 @@ import { savePetIds, getSavedPetIds } from '../utils/localStorage';
 import { ADD_PET } from '../utils/mutations'
 import { useMutation } from '@apollo/client'
 
+// import Dropdown from 'react-bootstrap/Dropdown';
+// import DropdownButton from 'react-bootstrap/DropdownButton';
+
+import Select from 'react-select';
+// import PhotoUnavailable from '../../public/photo-unavilible-Icon.png'
+
+const styles = {
+  dropdownMenuStyle: {
+    color: 'black',
+  }
+};
+
+const animalTypes = [
+  { label: 'Dog', value: 'dog' },
+  { label: 'Cat', value: 'cat' },
+  { label: 'Bird', value: 'bird' },
+  { label: 'Horse', value: 'horse' },
+  { label: 'Rabbit', value: 'Rabbit' },
+];
+
 const SearchPets = () => {
   // create state for holding returned google api data
   const [searchedPets, setSearchedPets] = useState([]);
@@ -16,7 +36,7 @@ const SearchPets = () => {
   // create state to hold saved petId values
   const [savedPetIds, setSavedPetIds] = useState(getSavedPetIds());
 
-  const [addPet ] = useMutation(ADD_PET)
+  const [addPet] = useMutation(ADD_PET)
 
   // set up useEffect hook to save `savedPetIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -86,22 +106,18 @@ const SearchPets = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Search for Pets!</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <h1>Search for a pal:</h1>
+          <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>
             <Form.Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a pet'
+              <Col xs={12} md={12} lg={8}>
+                <Select
+                  options={animalTypes}
+                  onChange={opt => setSearchInput(opt.label, opt.value)}
                 />
               </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
+              <Col xs={12} md={4} lg={4}>
+                <Button type='submit' variant='success' size='50px'>
+                  Find
                 </Button>
               </Col>
             </Form.Row>
@@ -113,7 +129,7 @@ const SearchPets = () => {
         <h2>
           {searchedPets.length
             ? `Viewing ${searchedPets.length} results:`
-            : 'Search for a pet to begin'}
+            : 'Search for an animal to view options of PAWSible pals'}
         </h2>
         <CardColumns>
           {searchedPets.map((pet) => {
