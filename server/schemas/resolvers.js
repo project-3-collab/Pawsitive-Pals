@@ -11,8 +11,8 @@ const resolvers = {
 
   Mutation: {
 
-    createUser: async (parent, { username, email, password }, context) => {
-      const user = await User.create({ username, email, password });
+    createUser: async (parent, { username, email, password, admin}, context) => {
+      const user = await User.create({ username, email, password, admin });
       const token = signToken(user);
       return { token, user };
     },
@@ -31,9 +31,9 @@ const resolvers = {
       }
       const adminStatus = user.admin;
 
-      if (!adminStatus) {
-        throw new AuthenticationError('Denied access')
-      }
+      // if (!adminStatus) {
+      //   throw new AuthenticationError('Denied access')
+      // }
 
       const token = signToken(user);
 
