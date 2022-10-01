@@ -15,6 +15,10 @@ class AuthService {
     return !!token && !this.isTokenExpired(token); // handwaiving here
   }
 
+  isAdmin() {
+    return decode(this.getToken()).data.admin
+  }
+
   // check if token is expired
   isTokenExpired(token) {
     try {
