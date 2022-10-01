@@ -1,68 +1,56 @@
-// route to get logged in user's info (needs the token)
-export const getMe = (token) => {
-  return fetch('/api/users/me', {
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-  });
-};
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SearchPets from './pages/SearchPets';
+import SavedPets from './pages/SavedPets';
+import Navbar from './components/Navbar';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-export const createUser = (userData) => {
-  return fetch('/api/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(userData),
-  });
-};
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
 
-export const loginUser = (userData) => {
-  return fetch('/api/users/login', {
-    method: 'POST',
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('id_token');
+  // return the headers to the context so httpLink can read them
+  return {
     headers: {
-      'Content-Type': 'application/json',
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
     },
-    body: JSON.stringify(userData),
-  });
-};
+  };
+});
 
-// save pet data for a logged in user
-export const savePet = (petData, token) => {
-  return fetch('/api/users', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(petData),
-  });
-};
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
-// remove saved pet data for a logged in user
-export const deletePet = (petId, token) => {
-  return fetch(`/api/users/pets/${petId}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
-};
+function App() {
+  return (
+    <ApolloProvider client={client}>
+      <Router>
+        <>
+          <Navbar />
+          <Routes>
+            <Route
+              path='/'
+              element={<SearchPets />}
+            />
+            <Route
+              path='/saved'
+              element={<SavedPets />}
+            />
+            <Route
+              path='*'
+              element={<h1 className='display-2'>Wrong page!</h1>}
+            />
+          </Routes>
+        </>
+      </Router>
+    </ApolloProvider >
+  );
+}
 
-// make a search to petfinder pets api
-// https://api.petfinder.com/v2/animals?type=dog&page=2
-export const searchPetfinder = async (query) => {
-  try {
-    const response = await fetch(`https://api.petfinder.com/v2/animals?type=${query}&page=2`, {
-      headers: {
-        'Authorization': 'Bearer <INSERT API TOKEN HERE>'
-      }
-    }).then((response) => response.json()).then((data) => {
-      return (data);
-    })
-    return (response)
-  } catch (err) {
-    console.log(err);
-  }
-};
+export default App;
