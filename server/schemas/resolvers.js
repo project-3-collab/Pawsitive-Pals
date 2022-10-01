@@ -15,7 +15,6 @@ const resolvers = {
       const user = await User.create({ username, email, password, admin});
       const token = signToken(user);
       return { token, user };
-      // return { user };
     },
 
     login: async (parent, { email, password }) => {
@@ -29,6 +28,11 @@ const resolvers = {
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
+      }
+      const adminStatus = user.admin;
+
+      if (!adminStatus) {
+        throw new AuthenticationError('Denied access')
       }
 
       const token = signToken(user);
