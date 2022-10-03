@@ -4,7 +4,7 @@ body {
 }
 
 h1,
-h2,
+h2
 h3,
 h4,
 h5,
@@ -19,7 +19,11 @@ h6 {
 
 
 /* Nifer */
-
+.logoContainer {
+  color: #f77f00;
+  width: 100px;
+  font-family: 'Times New Roman', Times, serif;
+}
 
 
 .cream-bg {
@@ -40,4 +44,10 @@ h6 {
 
 .dk-blue-bg {
   background-color: #003049;
+}
+
+.card-pics {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
 }

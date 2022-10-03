@@ -136,7 +136,7 @@ const SearchPets = () => {
             return (
               <Card key={pet.petId} border='dark'>
                 {pet.image ? (
-                  <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                  <Card.Img className='rounded-circle card-pics' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
                 <Card.Body>
                   <Card.Title>{pet.name}</Card.Title>

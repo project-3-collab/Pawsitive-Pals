@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
+import logo250 from '../assets/PP-logoandwords-150px.png';
 
 import Auth from '../utils/auth';
 
@@ -14,8 +15,10 @@ const AppNavbar = () => {
     <>
       <Navbar className='dk-blue-bg' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            Find your Paw pals today!
+          <Navbar.Brand className=".nav-header" as={Link} to='/'>
+            <div className="logoContainer">
+              <img src={logo250} alt='PAWSitive Pals Logo'/>
+            </div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
@@ -30,9 +33,9 @@ const AppNavbar = () => {
                   </Nav.Link>
                   {Auth.isAdmin() ? (
                     <>
-                    <Nav.Link as={Link} to='/admin'>
-                      Admin Page
-                    </Nav.Link>
+                      <Nav.Link as={Link} to='/admin'>
+                        Admin Page
+                      </Nav.Link>
                     </>
                   ) : (
                     <Nav.Link as={Link} to='/profile'>
