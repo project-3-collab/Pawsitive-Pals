@@ -47,7 +47,7 @@ const SavedPets = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <Jumbotron fluid className='text-light dk-blue-bg'>
         <Container>
           <h1>Viewing saved Pets!</h1>
         </Container>

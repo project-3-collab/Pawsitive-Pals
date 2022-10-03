@@ -1,5 +1,6 @@
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #eae2b7;
 }
 
 h1,
@@ -8,10 +9,35 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Rubik Mono One', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .small {
   font-weight: 300;
   font-style: italic;
+}
+
+
+/* Nifer */
+
+
+
+.cream-bg {
+  background-color: #eae2b7;
+}
+
+.yellow-bg {
+  background-color: #fcbf49;
+}
+
+.med-orange-bg {
+  background-color: #f77f00;
+}
+
+.dk-orange-bg{
+  background-color: #d62828;
+}
+
+.dk-blue-bg {
+  background-color: #003049;
 }

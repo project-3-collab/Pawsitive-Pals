@@ -104,7 +104,7 @@ const SearchPets = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <Jumbotron fluid className='text-light dk-blue-bg'>
         <Container>
           <h1>Search for a pal:</h1>
           <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>

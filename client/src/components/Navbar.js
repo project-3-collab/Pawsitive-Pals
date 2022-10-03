@@ -12,7 +12,7 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar className='dk-blue-bg' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
             Find your Paw pals today!
