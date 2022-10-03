@@ -25,6 +25,10 @@ h6 {
   font-family: 'Times New Roman', Times, serif;
 }
 
+.lt-cream-bg {
+  background-color: #fff7c8;
+}
+
 
 .cream-bg {
   background-color: #eae2b7;
@@ -50,8 +54,12 @@ h6 {
   background-color: #003049;
 }
 
+.dk-blue-text {
+  color: #003049;
+}
+
 .card-pics {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
 }

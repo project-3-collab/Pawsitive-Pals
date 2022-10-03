@@ -116,7 +116,7 @@ const SearchPets = () => {
                 />
               </Col>
               <Col xs={12} md={4} lg={4}>
-                <Button type='submit' variant='success' size='50px'>
+                <Button type='submit' className='med-orange-bg' size='50px'>
                   Find
                 </Button>
               </Col>
@@ -134,9 +134,9 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <Card key={pet.petId} border='dark' className='dk-orange-txt'>
+              <Card key={pet.petId} border='dark' className='dk-blue-text lt-cream-bg text-center'>
                 {pet.image ? (
-                  <Card.Img className='rounded-circle card-pics' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                  <Card.Img className='rounded-circle card-pics mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
                 <Card.Body>
                   <Card.Title>{pet.name}</Card.Title>
