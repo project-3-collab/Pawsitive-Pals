@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-import logo250 from '../assets/PP-logoandwords-150px.png';
+import logo250 from '../assets/PP-logoandwords-blue-150px.png';
 
 import Auth from '../utils/auth';
 
@@ -13,7 +13,7 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar className='dk-blue-bg' variant='dark' expand='lg'>
+      <Navbar className='yellow-bg' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand className=".nav-header" as={Link} to='/'>
             <div className="logoContainer">

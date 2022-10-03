@@ -104,7 +104,7 @@ const SearchPets = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light dk-blue-bg'>
+      <Jumbotron fluid className='text-light yellow-bg'>
         <Container>
           <h1>Search for a pal:</h1>
           <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>
@@ -126,7 +126,7 @@ const SearchPets = () => {
       </Jumbotron>
 
       <Container>
-        <h2>
+        <h2 className='dk-orange-txt'>
           {searchedPets.length
             ? `Viewing ${searchedPets.length} results:`
             : 'Search for an animal to view options of PAWSible pals'}
@@ -134,7 +134,7 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <Card key={pet.petId} border='dark'>
+              <Card key={pet.petId} border='dark' className='dk-orange-txt'>
                 {pet.image ? (
                   <Card.Img className='rounded-circle card-pics' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
