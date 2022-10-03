@@ -28,16 +28,16 @@ export const LOGIN = gql`
 `;
 
 export const ADD_PET = gql`
-    mutation SavePet($description: String!, $petId: String!, $type: String!, $image: String, $link: String, $name: [String]) {
-    savePet(description: $description, petId: $petId, type: $type, image: $image, link: $link, name: $name) {
+    mutation addPet($description: String!, $petId: ID!, $type: String!, $image: String, $link: String, $name: [String]) {
+    addPet(description: $description, petId: $petId, type: $type, image: $image, link: $link, name: $name) {
             _id
             username
             savedPets {
                 _id
                 petId
                 description
-                title
-                }
+                type
+            }
         }
     }
 `;

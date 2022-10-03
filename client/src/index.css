@@ -15,3 +15,7 @@ h6 {
   font-weight: 300;
   font-style: italic;
 }
+
+.like-btn {
+  background-color: violet;
+}

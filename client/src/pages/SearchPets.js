@@ -16,7 +16,7 @@ const SearchPets = () => {
   // create state to hold saved petId values
   const [savedPetIds, setSavedPetIds] = useState(getSavedPetIds());
 
-  const [addPet ] = useMutation(ADD_PET)
+  const [addPet] = useMutation(ADD_PET);
 
   // set up useEffect hook to save `savedPetIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -67,11 +67,13 @@ const SearchPets = () => {
     }
 
     try {
+      console.log("pettosave", petToSave);
+
       const petData = await addPet({
         variables: { ...petToSave },
       });
 
-      console.log(petData)
+      console.log("petData", petData)
 
       // if pet successfully saves to user's account, save pet id to state
       setSavedPetIds([...savedPetIds, petToSave.petId]);
@@ -79,6 +81,7 @@ const SearchPets = () => {
 
     } catch (err) {
       console.error(err);
+      console.log(err?.networkError?.result?.errors);
     }
   };
 
@@ -126,14 +129,15 @@ const SearchPets = () => {
                   <Card.Title>{pet.name}</Card.Title>
                   <p className='small'>Type: {pet.type}</p>
                   <Card.Text>{pet.description}</Card.Text>
+
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                      className='btn-block btn-info'
+                      className='btn-block like-btn"'
                       onClick={() => handleSavePet(pet.petId)}>
                       {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
-                        ? 'This pet has already been saved!'
-                        : 'Save this Pet!'}
+                        ? `${pet.name} in favorites!`
+                        : `Add ${pet.name} to favorites!`}
                     </Button>
                   )}
                 </Card.Body>

@@ -40,9 +40,11 @@ const resolvers = {
       return { token, user };
     },
 
-    savePet: async (parent, { name, description, petId, image, link, type }, context) => {
-
-      if (context.user) {
+    addPet: async (parent, { name, description, petId, image, link, type }, context) => {
+      console.log(44);
+      console.log(context?.user?._id);
+      console.log(46);
+      if (context?.user?._id) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
           {

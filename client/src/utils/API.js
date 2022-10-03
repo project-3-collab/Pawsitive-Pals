@@ -32,7 +32,7 @@ export const loginUser = (userData) => {
 };
 
 // save pet data for a logged in user
-export const savePet = (petData, token) => {
+export const addPet = (petData, token) => {
   return fetch('/api/users', {
     method: 'PUT',
     headers: {
