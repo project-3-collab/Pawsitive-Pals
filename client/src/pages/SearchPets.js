@@ -2,10 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-// import { searchGoogleBooks } from '../utils/API';
+import { searchPetfinder } from '../utils/API';
 import { savePetIds, getSavedPetIds } from '../utils/localStorage';
 import { ADD_PET } from '../utils/mutations'
 import { useMutation } from '@apollo/client'
+
+// import Dropdown from 'react-bootstrap/Dropdown';
+// import DropdownButton from 'react-bootstrap/DropdownButton';
+
+import Select from 'react-select';
+// import PhotoUnavailable from '../../public/photo-unavilible-Icon.png'
+
+const styles = {
+  dropdownMenuStyle: {
+    color: 'black',
+  }
+};
+
+const animalTypes = [
+  { label: 'Dog', value: 'dog' },
+  { label: 'Cat', value: 'cat' },
+  { label: 'Bird', value: 'bird' },
+  { label: 'Horse', value: 'horse' },
+  { label: 'Rabbit', value: 'Rabbit' },
+];
 
 const SearchPets = () => {
   // create state for holding returned google api data
@@ -16,7 +36,7 @@ const SearchPets = () => {
   // create state to hold saved petId values
   const [savedPetIds, setSavedPetIds] = useState(getSavedPetIds());
 
-  const [addPet ] = useMutation(ADD_PET)
+  const [addPet] = useMutation(ADD_PET)
 
   // set up useEffect hook to save `savedPetIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -33,22 +53,19 @@ const SearchPets = () => {
     }
 
     try {
-      // need to add petfinder API here
-      // const response = await searchGoogleBooks(searchInput);
+      const response = await searchPetfinder(searchInput);
+      console.log(response, "line 37");
+      console.log(response.animals, "line 38");
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const { items } = await response.json();
-// Need to insert API data here
-      // const petData = items.map((pet) => ({
-      //   petId: pet.id,
-      //   authors: pet.volumeInfo.authors || ['No author to display'],
-      //   title: pet.volumeInfo.title,
-      //   description: pet.volumeInfo.description,
-      //   image: pet.volumeInfo.imageLinks?.thumbnail || '',
-      // }));
+      const petData = response.animals.map((pet) => ({
+        petId: pet.id,
+        name: pet.name || ['No name to display'],
+        type: pet.type,
+        description: pet.description,
+        image: pet.primary_photo_cropped?.full || '',
+        link: pet.url,
+      }));
+      petData.forEach((d) => console.log(d));
 
       setSearchedPets(petData);
       setSearchInput('');
@@ -89,22 +106,18 @@ const SearchPets = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Search for Pets!</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <h1>Search for a pal:</h1>
+          <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>
             <Form.Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a pet'
+              <Col xs={12} md={12} lg={8}>
+                <Select
+                  options={animalTypes}
+                  onChange={opt => setSearchInput(opt.label, opt.value)}
                 />
               </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
+              <Col xs={12} md={4} lg={4}>
+                <Button type='submit' variant='success' size='50px'>
+                  Find
                 </Button>
               </Col>
             </Form.Row>
@@ -116,18 +129,18 @@ const SearchPets = () => {
         <h2>
           {searchedPets.length
             ? `Viewing ${searchedPets.length} results:`
-            : 'Search for a pet to begin'}
+            : 'Search for an animal to view options of PAWSible pals'}
         </h2>
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
               <Card key={pet.petId} border='dark'>
                 {pet.image ? (
-                  <Card.Img src={pet.image} alt={`The cover for ${pet.title}`} variant='top' />
+                  <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{pet.title}</Card.Title>
-                  <p className='small'>Authors: {pet.authors}</p>
+                  <Card.Title>{pet.name}</Card.Title>
+                  <p className='small'>Type: {pet.type}</p>
                   <Card.Text>{pet.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
