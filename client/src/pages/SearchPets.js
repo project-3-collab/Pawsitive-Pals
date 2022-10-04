@@ -89,21 +89,22 @@ const SearchPets = () => {
     const username = Auth.getUserData().username;
 
     console.log("petToSave", petToSave);
-    try {
-      const petData = await addPet({
-        variables: { ...petToSave, userId, username },
-      });
-
     // try {
     //   const petData = await addPet({
-    //     variables: {
-    //       petId: petToSave.petId,
-    //       name: petToSave.name,
-    //       type: petToSave.type,
-    //       description: petToSave.description,
-    //       image: petToSave.image,
-    //     },
+    //     variables: { ...petToSave, userId, username },
     //   });
+
+    console.log("userId", userId);
+    console.log("username", username);
+
+    try {
+      const petData = await addPet({
+        variables: {
+          _id: userId,
+          username: username,
+          ...petToSave
+        },
+      });
 
       // Not being hit!
       console.log("petData", petData)
