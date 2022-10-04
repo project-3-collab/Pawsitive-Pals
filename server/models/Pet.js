@@ -10,7 +10,7 @@ const petSchema = new Schema({
   },
   // saved pet id from petfinder
   petId: {
-    type: String,
+    type: Number,
     required: true,
   },
   image: {

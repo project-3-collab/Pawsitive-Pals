@@ -78,22 +78,20 @@ const SearchPets = () => {
   const handleSavePet = async (petId) => {
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
-    console.log("petid", petId);
-    console.log("petToSave", petToSave);
-
-
+  
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
-
+    const userId = Auth.getUserData().userId;
+    const username = Auth.getUserData().username;
 
     console.log("petToSave", petToSave);
     try {
       const petData = await addPet({
-        variables: { ...petToSave },
+        variables: { ...petToSave, userId, username },
       });
 
     // try {
