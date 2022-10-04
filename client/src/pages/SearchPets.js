@@ -7,9 +7,6 @@ import { savePetIds, getSavedPetIds } from '../utils/localStorage';
 import { ADD_PET } from '../utils/mutations'
 import { useMutation } from '@apollo/client'
 
-// import Dropdown from 'react-bootstrap/Dropdown';
-// import DropdownButton from 'react-bootstrap/DropdownButton';
-
 import Select from 'react-select';
 // import PhotoUnavailable from '../../public/photo-unavilible-Icon.png'
 
@@ -78,20 +75,36 @@ const SearchPets = () => {
   const handleSavePet = async (petId) => {
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
-
+  
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
+    const userId = Auth.getUserData().userId;
+    const username = Auth.getUserData().username;
+
+    console.log("petToSave", petToSave);
+    // try {
+    //   const petData = await addPet({
+    //     variables: { ...petToSave, userId, username },
+    //   });
+
+    console.log("userId", userId);
+    console.log("username", username);
 
     try {
       const petData = await addPet({
-        variables: { ...petToSave },
+        variables: {
+          _id: userId,
+          username: username,
+          ...petToSave
+        },
       });
 
-      console.log(petData)
+      // Not being hit!
+      console.log("petData", petData)
 
       // if pet successfully saves to user's account, save pet id to state
       setSavedPetIds([...savedPetIds, petToSave.petId]);
