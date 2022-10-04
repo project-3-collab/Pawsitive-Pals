@@ -1,14 +1,12 @@
 const { Schema } = require('mongoose');
 
 const petSchema = new Schema({
-  name: [
+  name:
     {
       type: String,
     },
-  ],
   description: {
     type: String,
-    required: true,
   },
   // saved pet id from petfinder
   petId: {
@@ -30,9 +28,6 @@ const petSchema = new Schema({
     type: String
   },
   age:{
-    type: String
-  },
-  size: {
     type: String
   },
   environment: [

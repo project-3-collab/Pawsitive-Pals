@@ -78,6 +78,9 @@ const SearchPets = () => {
   const handleSavePet = async (petId) => {
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
+    console.log("petid", petId);
+    console.log("petToSave", petToSave);
+
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -86,12 +89,26 @@ const SearchPets = () => {
       return false;
     }
 
+
+    console.log("petToSave", petToSave);
     try {
       const petData = await addPet({
         variables: { ...petToSave },
       });
 
-      console.log(petData)
+    // try {
+    //   const petData = await addPet({
+    //     variables: {
+    //       petId: petToSave.petId,
+    //       name: petToSave.name,
+    //       type: petToSave.type,
+    //       description: petToSave.description,
+    //       image: petToSave.image,
+    //     },
+    //   });
+
+      // Not being hit!
+      console.log("petData", petData)
 
       // if pet successfully saves to user's account, save pet id to state
       setSavedPetIds([...savedPetIds, petToSave.petId]);
