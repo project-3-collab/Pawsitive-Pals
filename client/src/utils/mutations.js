@@ -31,15 +31,18 @@ export const LOGIN = gql`
 `;
 
 export const ADD_PET = gql`
-    mutation SavePet($description: String!, $petId: String!, $type: String!, $image: String, $link: String, $name: [String]) {
+    mutation SavePet($description: String, $petId: Float!, $type: String!, $image: String, $link: String, $name: String) {
     savePet(description: $description, petId: $petId, type: $type, image: $image, link: $link, name: $name) {
             _id
             username
             savedPets {
                 _id
-                petId
                 description
-                title
+                petId
+                type
+                image
+                link
+                name
                 }
         }
     }

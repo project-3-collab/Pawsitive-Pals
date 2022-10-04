@@ -19,6 +19,13 @@ class AuthService {
     return decode(this.getToken()).data.admin
   }
 
+  getUserData() {
+    const userId = decode(this.getToken()).data._id;
+    const username = decode(this.getToken()).data.username;
+    console.log(userId, username);
+    return {userId, username};
+  }
+
   // check if token is expired
   isTokenExpired(token) {
     try {
