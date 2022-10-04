@@ -20,7 +20,7 @@ const AppNavbar = () => {
               <img src={logo250} alt='PAWSitive Pals Logo'/>
             </div>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
+          <Navbar.Toggle className="custom-toggler navbar-toggler" aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
             <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/'>
