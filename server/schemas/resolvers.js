@@ -73,6 +73,21 @@ const resolvers = {
 
     },
 
+    submitRequest: async (parent, args, context) => {
+
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { submittedRequest: args.input }
+          },
+          { new: true }
+        );
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    }
+
   }
 };
 

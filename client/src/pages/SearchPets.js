@@ -7,9 +7,6 @@ import { savePetIds, getSavedPetIds } from '../utils/localStorage';
 import { ADD_PET } from '../utils/mutations'
 import { useMutation } from '@apollo/client'
 
-// import Dropdown from 'react-bootstrap/Dropdown';
-// import DropdownButton from 'react-bootstrap/DropdownButton';
-
 import Select from 'react-select';
 // import PhotoUnavailable from '../../public/photo-unavilible-Icon.png'
 
