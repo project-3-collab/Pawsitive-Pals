@@ -1,6 +1,6 @@
 body {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background-color: #eae2b7;
+  background-color: #eae2b7; color: #003049;
 }
 
 h1,
@@ -63,3 +63,7 @@ h6 {
   height: 150px;
   object-fit: cover;
 }
+
+/* .modal-backdrop {
+  background-color: red;
+} */

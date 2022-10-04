@@ -138,14 +138,14 @@ const SearchPets = () => {
                 {pet.image ? (
                   <Card.Img className='rounded-circle card-pics mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
-                <Card.Body>
-                  <Card.Title>{pet.name}</Card.Title>
+                <Card.Body className='dk-blue-text'>
+                  <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
                   <p className='small'>Type: {pet.type}</p>
                   <Card.Text>{pet.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                      className='btn-block btn-info'
+                      className='btn-block med-orange-bg'
                       onClick={() => handleSavePet(pet.petId)}>
                       {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
                         ? 'This pet has already been saved!'
