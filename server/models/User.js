@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 // import schema from Pet.js
 const petSchema = require('./Pet');
 
+// import schema from PlaydateRequest.js
+const playdateRequestSchema = require('./PlaydateRequest');
+
 const userSchema = new Schema(
   {
     username: {
@@ -52,7 +55,10 @@ const userSchema = new Schema(
     },
    
     // set savedPets to be an array of data that adheres to the petSchema
-    savedPets: [petSchema]
+    savedPets: [petSchema],
+
+    // set playdateRequests to be an array of data
+    submittedRequests: [playdateRequestSchema]
   },
   // set this to use virtual below
   {
@@ -79,10 +85,15 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `petCount` with the number of saved pets we have
+// when we query a user, we'll also get another field called `petCount` with the number of saved pets and requests we have
 userSchema.virtual('petCount').get(function () {
   return this.savedPets.length;
 });
+
+userSchema.virtual('requestCount').get(function () {
+  return this.submittedRequests.length;
+});
+
 
 const User = model('User', userSchema);
 

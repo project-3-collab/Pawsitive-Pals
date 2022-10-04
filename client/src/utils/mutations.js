@@ -51,9 +51,31 @@ export const DELETE_PET = gql`
             _id
             username
             savedPets {
+                _id
+                petId
+                description
+            }
+        }
+    }
+`;
+
+export const SUBMIT_REQUEST = gql`
+    mutation SubmitRequest($id: PlayDateRequestInput!) {
+        submitRequest(input: $input) {
             _id
-            petId
-            description
+            username
+            submittedRequest {
+                _id
+                fromDate
+                toDate
+                housingType
+                housingStatus
+                housingComment
+                otherComment
+                pet {
+                    petId
+                    type
+                }
             }
         }
     }
