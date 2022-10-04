@@ -24,28 +24,44 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    name: [
-      {
-        type: String,
-      }
-    ],
+    firstname:
+    {
+      type: String,
+    },
+    lastname:
+    {
+      type: String,
+    },
     admin: {
       type: Boolean,
       required: true,
     },
-    address: [
-      {
-        type: String
-      }
-    ],
+    address: {
+      type: String
+    },
+    city: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    zipCode: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
     phone: {
       type: String
     },
     license: {
       type: String
     },
-    age: {
+    birthdate: {
       type: String
+    },
+    age: {
+      type: Number
     },
     experience: {
       type: String
@@ -53,7 +69,7 @@ const userSchema = new Schema(
     housing: {
       type: String
     },
-   
+
     // set savedPets to be an array of data that adheres to the petSchema
     savedPets: [petSchema],
 
