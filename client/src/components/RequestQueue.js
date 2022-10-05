@@ -17,12 +17,9 @@ const RequestQueue = () => {
   }
 
   //this is to pull up the accepted or denied reques from local storage
-
   //const pullApproved = function() {
    
   
-  
-
 
   return (
     <div>
