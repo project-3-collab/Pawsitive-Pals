@@ -1,18 +1,26 @@
-const { User } = require('../models');
+const { User, PlayDateRequest, Pet } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
+const PlaydateRequest = require('../models/PlaydateRequest');
 
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
       return User.findById(context.user._id)
     },
+    //check the context (make sure only admin can see)
+    playdateRequests: async (parent, args,context) => {
+      return PlaydateRequest.find()
+    },
+    playdateRequest: async (parent, args, context) => {
+      return PlaydateRequest.findOne({_id: args.playdateId})
+    }
   },
 
   Mutation: {
 
-    createUser: async (parent, { username, email, password }, context) => {
-      const user = await User.create({ username, email, password });
+    createUser: async (parent, { username, email, password, admin, firstname, lastname, phone, license, age, birthdate, experience, housing, address, city, state, zipcode, country}, context) => {
+      const user = await User.create({ username, email, password, admin, firstname, lastname, phone, license, age, birthdate, experience, housing, address, city, state, zipcode, country});
       const token = signToken(user);
       return { token, user };
     },
@@ -31,9 +39,9 @@ const resolvers = {
       }
       const adminStatus = user.admin;
 
-      if (!adminStatus) {
-        throw new AuthenticationError('Denied access')
-      }
+      // if (!adminStatus) {
+      //   throw new AuthenticationError('Denied access')
+      // }
 
       const token = signToken(user);
 
@@ -72,6 +80,21 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
 
     },
+
+    submitRequest: async (parent, args, context) => {
+
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { submittedRequest: args.input }
+          },
+          { new: true }
+        );
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    }
 
   }
 };

@@ -1,6 +1,8 @@
-import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Jumbotron, Container, CardColumns, Card, Button, Modal } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
+import PlaydateRequest from '../components/PlaydateRequest';
 
 import { removePetId } from '../utils/localStorage';
 import { DELETE_PET } from '../utils/mutations'
@@ -13,12 +15,15 @@ const SavedPets = () => {
     variables: { _id: Auth.getProfile().data._id }
   });
 
-  const [ deletePet ] = useMutation(DELETE_PET);
+  const [deletePet] = useMutation(DELETE_PET);
 
-  const userData = data?.user ;
+  const userData = data?.user;
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    // create function that accepts the pet's mongo _id value as param and deletes the pet from the database
+  // create function that accepts the pet's mongo _id value as param and deletes the pet from the database
   const handleDeletePet = async (pet) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -40,6 +45,7 @@ const SavedPets = () => {
     }
   };
 
+
   // if data isn't here yet, say so
   if (!userData) {
     return <h2>LOADING...</h2>;
@@ -47,7 +53,7 @@ const SavedPets = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <Jumbotron fluid className='text-light yellow-bg'>
         <Container>
           <h1>Viewing saved Pets!</h1>
         </Container>
@@ -61,13 +67,33 @@ const SavedPets = () => {
         <CardColumns>
           {userData.savedPets.map((pet) => {
             return (
-              <Card key={pet.petId} border='dark'>
+              <Card className='dk-blue-text' key={pet.petId} border='dark'>
                 {pet.image ? <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' /> : null}
-                <Card.Body>
-                  <Card.Title>{pet.name}</Card.Title>
-                  <p className='small'>Type: {pet.type}</p>
-                  <Card.Text>{pet.description}</Card.Text>
-                  <Button className='btn-block btn-danger' onClick={() => handleDeletePet(pet)}>
+                <Card.Body className='dk-blue-text'>
+                  <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
+                  <p className='small dk-blue-text'>Type: {pet.type}</p>
+                  <Card.Text className='dk-blue-text'>{pet.description}</Card.Text>
+                  
+                  <Button variant="primary" className='btn-block med-orange-bg' onClick={handleShow}>
+                    Request a play date!
+                  </Button>
+
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Request a play date!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body><PlaydateRequest/></Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                      <Button variant="primary" onClick={handleClose}>
+                        Submit
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+
+                  <Button className='btn-block med-orange-bg' onClick={() => handleDeletePet(pet)}>
                     Delete this Pet!
                   </Button>
                 </Card.Body>
