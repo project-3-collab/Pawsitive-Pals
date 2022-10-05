@@ -88,7 +88,7 @@ const SavedPets = () => {
                         Close
                       </Button>
                       <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                        Submit
                       </Button>
                     </Modal.Footer>
                   </Modal>
