@@ -1,17 +1,87 @@
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #eae2b7; color: #003049;
 }
 
 h1,
-h2,
+h2
 h3,
 h4,
 h5,
 h6 {
-  font-family: 'Rubik Mono One', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .small {
   font-weight: 300;
   font-style: italic;
+}
+
+
+/* Nifer */
+.logoContainer {
+  color: #f77f00;
+  width: 100px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.lt-cream-bg {
+  background-color: #fff7c8;
+}
+
+
+.cream-bg {
+  background-color: #eae2b7;
+}
+
+.yellow-bg {
+  background-color: #fcbf49;
+}
+
+.med-orange-bg {
+  background-color: #f77f00;
+  border-color: #d62828;
+}
+
+.dk-orange-bg{
+  background-color: #d62828;
+}
+
+.dk-orange-txt{
+  color: #d62828;
+}
+
+.dk-blue-bg {
+  background-color: #003049;
+}
+
+.dk-blue-text {
+  color: #003049;
+}
+
+.card-pics {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* .modal-backdrop {
+  background-color: red;
+} */
+
+/* from stackoverflow */
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(214, 40, 40, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.custom-toggler.navbar-toggler {
+  border-color: #f77f00;
+} 
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background-color:#d62828;
+  border-color: #f77f00;
+  transition: 0.7s;
 }

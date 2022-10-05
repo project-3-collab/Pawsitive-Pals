@@ -7,9 +7,6 @@ import { savePetIds, getSavedPetIds } from '../utils/localStorage';
 import { ADD_PET } from '../utils/mutations'
 import { useMutation } from '@apollo/client'
 
-// import Dropdown from 'react-bootstrap/Dropdown';
-// import DropdownButton from 'react-bootstrap/DropdownButton';
-
 import Select from 'react-select';
 // import PhotoUnavailable from '../../public/photo-unavilible-Icon.png'
 
@@ -78,20 +75,36 @@ const SearchPets = () => {
   const handleSavePet = async (petId) => {
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
-
+  
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
+    const userId = Auth.getUserData().userId;
+    const username = Auth.getUserData().username;
+
+    console.log("petToSave", petToSave);
+    // try {
+    //   const petData = await addPet({
+    //     variables: { ...petToSave, userId, username },
+    //   });
+
+    console.log("userId", userId);
+    console.log("username", username);
 
     try {
       const petData = await addPet({
-        variables: { ...petToSave },
+        variables: {
+          _id: userId,
+          username: username,
+          ...petToSave
+        },
       });
 
-      console.log(petData)
+      // Not being hit!
+      console.log("petData", petData)
 
       // if pet successfully saves to user's account, save pet id to state
       setSavedPetIds([...savedPetIds, petToSave.petId]);
@@ -104,7 +117,7 @@ const SearchPets = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <Jumbotron fluid className='text-light yellow-bg'>
         <Container>
           <h1>Search for a pal:</h1>
           <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>
@@ -116,7 +129,7 @@ const SearchPets = () => {
                 />
               </Col>
               <Col xs={12} md={4} lg={4}>
-                <Button type='submit' variant='success' size='50px'>
+                <Button type='submit' className='med-orange-bg' size='50px'>
                   Find
                 </Button>
               </Col>
@@ -126,7 +139,7 @@ const SearchPets = () => {
       </Jumbotron>
 
       <Container>
-        <h2>
+        <h2 className='dk-orange-txt'>
           {searchedPets.length
             ? `Viewing ${searchedPets.length} results:`
             : 'Search for an animal to view options of PAWSible pals'}
@@ -134,18 +147,18 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <Card key={pet.petId} border='dark'>
+              <Card key={pet.petId} border='dark' className='dk-blue-text lt-cream-bg text-center'>
                 {pet.image ? (
-                  <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                  <Card.Img className='rounded-circle card-pics mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                 ) : null}
-                <Card.Body>
-                  <Card.Title>{pet.name}</Card.Title>
+                <Card.Body className='dk-blue-text'>
+                  <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
                   <p className='small'>Type: {pet.type}</p>
                   <Card.Text>{pet.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                      className='btn-block btn-info'
+                      className='btn-block med-orange-bg'
                       onClick={() => handleSavePet(pet.petId)}>
                       {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
                         ? 'This pet has already been saved!'
