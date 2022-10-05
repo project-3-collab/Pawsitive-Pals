@@ -1,7 +1,6 @@
-const { User, PlayDateRequest, Pet } = require('../models');
+const { User, PlaydateRequest, Pet } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
-const PlaydateRequest = require('../models/PlaydateRequest');
 
 const resolvers = {
   Query: {
