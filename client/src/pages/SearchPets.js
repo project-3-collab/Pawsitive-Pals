@@ -142,7 +142,7 @@ const SearchPets = () => {
         <h2 className='dk-orange-txt'>
           {searchedPets.length
             ? `Viewing ${searchedPets.length} results:`
-            : 'Search for an animal to view options of PAWSible pals'}
+            : 'Search for an animal to view options of PAWSible Pals'}
         </h2>
         <CardColumns>
           {searchedPets.map((pet) => {

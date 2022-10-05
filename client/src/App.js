@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchPets from './pages/SearchPets';
-import SavedPets from './pages/SavedPets';
+import UserProfile from './pages/UserProfile';
 import PlaydateRequest from './components/PlaydateRequest';
 import Navbar from './components/Navbar';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
@@ -41,7 +41,7 @@ function App() {
             />
             <Route
               path='/saved'
-              element={<SavedPets />}
+              element={<UserProfile />}
             />
             {/* <Route
               path='/animalprofile'

@@ -28,8 +28,8 @@ const AppNavbar = () => {
               {/* if user is logged in show saved animals and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/saved'>
-                    See Your Pets
+                  <Nav.Link as={Link} to='/'>
+                    Search PAWSitivePals
                   </Nav.Link>
                   {Auth.isAdmin() ? (
                     <>
@@ -38,7 +38,7 @@ const AppNavbar = () => {
                       </Nav.Link>
                     </>
                   ) : (
-                    <Nav.Link as={Link} to='/profile'>
+                    <Nav.Link as={Link} to='/saved'>
                       Profile Page
                     </Nav.Link>
                   )
