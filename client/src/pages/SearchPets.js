@@ -118,7 +118,7 @@ const SearchPets = () => {
   return (
     <>
       <Jumbotron fluid className='text-light yellow-bg'>
-        <Container>
+        <Container style={{ color: "black"}}>
           <h1>Search for a pal:</h1>
           <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>
             <Form.Row>
