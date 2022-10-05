@@ -36,26 +36,20 @@ const SearchPets = () => {
   const [searchedPets, setSearchedPets] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
-
   // create state to hold saved petId values
   const [savedPetIds, setSavedPetIds] = useState(getSavedPetIds());
-
   const [addPet] = useMutation(ADD_PET)
-
   // set up useEffect hook to save `savedPetIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => savePetIds(savedPetIds);
   });
-
   // create method to search for pets and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     if (!searchInput) {
       return false;
     }
-
     try {
       const response = await searchPetfinder(searchInput);
       // console.log(response, "line 37");
@@ -88,41 +82,30 @@ const SearchPets = () => {
       console.error(err);
     }
   };
-
   // create function to handle saving a pet to our database
   const handleSavePet = async (petId) => {
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
-
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
     if (!token) {
       return false;
     }
-
     try {
       const petData = await addPet({
         variables: { ...petToSave },
       });
-
       console.log(petData)
-
       // if pet successfully saves to user's account, save pet id to state
       setSavedPetIds([...savedPetIds, petToSave.petId]);
-
-
     } catch (err) {
       console.error(err);
     }
   };
-
   const navigate = useNavigate();
-
   const navigateAnimal = (petId) => {
     navigate(`/animal/${petId}`);
   };
-
   return (
     <>
       <Jumbotron fluid className='text-light yellow-bg'>
@@ -176,6 +159,8 @@ const SearchPets = () => {
                           ? 'This pet has already been saved!'
                           : 'Save this Pet!'}
                       </Button>
+
+
                     )}
                   </Card.Body>
                 </Card>

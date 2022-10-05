@@ -45,45 +45,45 @@ export default function AnimalPage() {
         <div class="row align-items-center flex-row-reverse">
           <div class="col-lg-6">
             <div class="about-text go-to">
-              <h3 class="dark-color">About {petData.name}</h3>
+              <h3 class="dark-color">About {petData?.name}</h3>
               <h6>Type: {petData.type}</h6>
-              <h6 class="theme-color lead">{petData.contact.address.city}, {petData.contact.address.state}</h6>
-              <p>{petData.description}</p>
+              <h6 class="theme-color lead">{petData?.contact?.address?.city}, {petData?.contact?.address?.state}</h6>
+              <p>{petData?.description}</p>
               <div class="row about-list">
                 <div class="col-md-6">
                   <div class="media">
                     <label>Breed</label>
-                    <p>{petData.breeds.primary}</p>
+                    <p>{petData?.breeds?.primary}</p>
                   </div>
                   <div class="media">
                     <label>Age</label>
-                    <p>{petData.age}</p>
+                    <p>{petData?.age}</p>
                   </div>
                   <div class="media">
                     <label>Size</label>
-                    <p>{petData.size}</p>
+                    <p>{petData?.size}</p>
                   </div>
                   <div class="media">
                     <label>Status</label>
-                    <p>{petData.status}</p>
+                    <p>{petData?.status}</p>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="media">
                     <label>Color</label>
-                    <p>{petData.colors.primary}</p>
+                    <p>{petData.colors?.primary}</p>
                   </div>
                   <div class="media">
                     <label>Gender</label>
-                    <p>{petData.gender}</p>
+                    <p>{petData?.gender}</p>
                   </div>
                   <div class="media">
                     <label>E-mail</label>
-                    <p>{petData.contact.email}</p>
+                    <p>{petData?.contact?.email}</p>
                   </div>
                   <div class="media">
                     <label>Phone</label>
-                    <p>{petData.contact.phone}</p>
+                    <p>{petData?.contact?.phone}</p>
                   </div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export default function AnimalPage() {
           </div>
           <div class="col-lg-6">
             <div class="about-avatar">
-              <img src={petData.primary_photo_cropped.full} alt={`The cover for ${petData.type}`} />
+              <img src={petData?.primary_photo_cropped?.full} alt={`The cover for ${petData.type}`} />
             </div>
           </div>
         </div>
