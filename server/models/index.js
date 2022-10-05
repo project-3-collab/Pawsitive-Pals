@@ -1,3 +1,4 @@
 const User = require('./User');
-
-module.exports = { User };
+const PlayDateRequest = require('./PlaydateRequest');
+const Pet = require('./Pet');
+module.exports = { User, PlayDateRequest, Pet };

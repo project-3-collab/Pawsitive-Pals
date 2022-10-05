@@ -69,10 +69,14 @@ const typeDefs = gql`
     housingStatus: HousingStatus
     housingComment: String
     otherComment: String
+    approvalStatus: Int
   }
 
   type Query {
     user: User
+    playdateRequests: [PlayDateRequest]
+    playdateRequest (playdateId: ID!) : PlaydateRequest
+
   }
 
   type Mutation {
