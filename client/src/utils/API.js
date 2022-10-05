@@ -65,7 +65,7 @@ export const searchPetfinder = async (query) => {
       'client_secret': process.env.REACT_APP_SECRET,
       });
 
-    const response = await fetch(`https://api.petfinder.com/v2/animals?type=${query}&page=2`, {
+    const response = await fetch(`https://api.petfinder.com/v2/animals?type=${query}&location=94587`, {
       headers: {
         'Authorization': `Bearer ${tokenData.data.access_token}`
       }
