@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Heart from "react-animated-heart";
+
 // import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Auth from '../utils/auth';
@@ -88,6 +90,7 @@ const SearchPets = () => {
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
+    const [ isClick, setClick ] = useState(false);
     if (!token) {
       return false;
     }
@@ -102,10 +105,10 @@ const SearchPets = () => {
       console.error(err);
     }
   };
-  const navigate = useNavigate();
-  const navigateAnimal = (petId) => {
-    navigate(`/animal/${petId}`);
-  };
+  // const navigate = useNavigate();
+  // const navigateAnimal = (petId) => {
+  //   navigate(`/animal/${petId}`);
+  // };
   return (
     <>
       <Jumbotron fluid className='text-light yellow-bg'>
@@ -138,10 +141,10 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <div key={pet.petId} onClick={() => navigateAnimal(pet.petId)}>
-                {/* <Routes>
-                  <Route path="/animal" element={<AnimalPage />} />
-                </Routes> */}
+              // <div key={pet.petId} onClick={() => navigateAnimal(pet.petId)}>
+              //   {/* <Routes>
+              //     <Route path="/animal" element={<AnimalPage />} />
+              //   </Routes> */}
                 <Card key={pet.petId} border='dark' className='dk-blue-text lt-cream-bg text-center'>
                   {pet.image ? (
                     <Card.Img className='rounded-circle card-pics img-thumbnail mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
@@ -150,6 +153,14 @@ const SearchPets = () => {
                     <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
                     <p className='small'>Type: {pet.type}</p>
                     <Card.Text>{pet.description}</Card.Text>
+
+                    <Heart 
+                      disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
+
+                      isClick={isClick} 
+
+                      onClick={() => setClick(!isClick)} />
+
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
@@ -161,10 +172,12 @@ const SearchPets = () => {
                       </Button>
 
 
+
+
                     )}
                   </Card.Body>
                 </Card>
-              </div>
+              // </div>
             );
           })}
         </CardColumns>
