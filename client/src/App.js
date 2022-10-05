@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchPets from './pages/SearchPets';
-import SavedPets from './pages/SavedPets';
+import UserProfile from './pages/UserProfile';
 import AdministratorRequests from './pages/AdministratorRequests';
 import PlaydateRequest from './components/PlaydateRequest';
 import Navbar from './components/Navbar';
@@ -44,7 +44,7 @@ function App() {
             />
             <Route
               path='/saved'
-              element={<SavedPets />}
+              element={<UserProfile />}
             />
              <Route
               path='/adminRequest'

@@ -28,22 +28,22 @@ const AppNavbar = () => {
               {/* if user is logged in show saved animals and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/saved' style={{ color: "black"}}>
-                    See Your Pets
+                  <Nav.Link as={Link} to='/' style={{ color: "#003049"}}>
+                    Search PAWSitivePals
                   </Nav.Link>
                   {Auth.isAdmin() ? (
                     <>
-                      <Nav.Link as={Link} to='/admin' style={{ color: "black"}}>
+                      <Nav.Link as={Link} to='/admin' style={{ color: "#003049"}}>
                         Admin Page
                       </Nav.Link>
                     </>
                   ) : (
-                    <Nav.Link as={Link} to='/profile' style={{ color: "black"}}>
+                    <Nav.Link as={Link} to='/saved' style={{ color: "#003049"}}>
                       Profile Page
                     </Nav.Link>
                   )
                   }
-                  <Nav.Link onClick={Auth.logout} style={{ color: "black"}}>Logout</Nav.Link>
+                  <Nav.Link onClick={Auth.logout} style={{ color: "#003049"}}>Logout</Nav.Link>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link>
