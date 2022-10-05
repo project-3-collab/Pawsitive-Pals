@@ -77,21 +77,15 @@ export const SUBMIT_REQUEST = gql`
     mutation SubmitRequest($id: PlaydateRequestInput!) {
         submitRequest(input: $input) {
             _id
-            username
-            submittedRequest {
-                _id
-                fromDate
-                toDate
-                housingType
-                housingStatus
-                housingComment
-                otherComment
-                approvalStatus
-                pet {
-                    petId
-                    type
-                }
-            }
+            requester
+            petId
+            fromDate
+            toDate
+            housingType
+            housingStatus
+            housingComment
+            otherComment
+            approvalStatus
         }
     }
 `;
