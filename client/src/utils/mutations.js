@@ -86,6 +86,7 @@ export const SUBMIT_REQUEST = gql`
                 housingStatus
                 housingComment
                 otherComment
+                approvalStatus
                 pet {
                     petId
                     type
