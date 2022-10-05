@@ -108,7 +108,7 @@ const SignupForm = () => {
           Something went wrong with your signup!
         </Alert>
 
-        <Form.Group>
+        <Form.Group className='dk-blue-text'>
           <Form.Label htmlFor='username'>Username</Form.Label>
           <Form.Control
             type='text'

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
+import logo250 from '../assets/PP-logoandwords-blue-150px.png';
 
 import Auth from '../utils/auth';
 
@@ -12,12 +13,14 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar className='yellow-bg' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            Find your Paw pals today!
+          <Navbar.Brand className=".nav-header" as={Link} to='/'>
+            <div className="logoContainer">
+              <img src={logo250} alt='PAWSitive Pals Logo'/>
+            </div>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
+          <Navbar.Toggle className="custom-toggler navbar-toggler" aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
             <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/'>
@@ -30,9 +33,9 @@ const AppNavbar = () => {
                   </Nav.Link>
                   {Auth.isAdmin() ? (
                     <>
-                    <Nav.Link as={Link} to='/admin'>
-                      Admin Page
-                    </Nav.Link>
+                      <Nav.Link as={Link} to='/admin'>
+                        Admin Page
+                      </Nav.Link>
                     </>
                   ) : (
                     <Nav.Link as={Link} to='/profile'>
@@ -61,10 +64,10 @@ const AppNavbar = () => {
             <Modal.Title id='signup-modal'>
               <Nav variant='pills'>
                 <Nav.Item>
-                  <Nav.Link eventKey='login'>Login</Nav.Link>
+                  <Nav.Link className='dk-blue-bg' eventKey='login'>Login</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
+                  <Nav.Link className='dk-blue-bg' eventKey='signup'>Sign Up</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Modal.Title>
