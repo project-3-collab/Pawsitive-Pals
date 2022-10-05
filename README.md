@@ -8,9 +8,10 @@
   - [Acceptance Criteria](#acceptance-criteria)
   - [Screenshot](#screenshot)
   - [Links](#links)
-- [our process](#my-process)
+- [Our process](#our-process)
   - [Built with](#built-with)
   - [What we learned](#what-we-learned)
+  - [Resources](#resources)
   - [Continued development](#continued-development)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
@@ -78,6 +79,10 @@ THEN I can plan another playdate with a different animal, plan for an adoption, 
 This project was a great opportunity to showcase the skills we have learned in the bootcamp. In addition to setting a stronger coding foundation, we learned the intricacies of creating an application with the front end and back end. With the back end, we were able to set up a server and create a database. We used React for the front end of our application. 
 
 In addition to the skills to code the application, we learned how to work in a team. Each of our team members had different backgrounds, so learning how to showcase each of our strengths was proven to be efficacious. We also learned that communication was key to the development of our app. 
+
+### Resources
+
+A cute little animated heart component that you can add to your project. [Animated heart buttons](https://bbbootstrap.com/snippets/animated-heart-buttons-77810974)
 
 ### Continued development
 ​
