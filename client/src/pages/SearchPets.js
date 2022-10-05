@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+// import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Auth from '../utils/auth';
 import { searchPetfinder } from '../utils/API';
 import { savePetIds, getSavedPetIds } from '../utils/localStorage';
-import { ADD_PET } from '../utils/mutations'
-import { useMutation } from '@apollo/client'
+import { ADD_PET } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
+// import AnimalPage from './animalProfile';
+// import AnimalPage from './AnimalProfile';
 
 const SearchPets = () => {
   // create state for holding returned google api data
@@ -16,7 +20,7 @@ const SearchPets = () => {
   // create state to hold saved petId values
   const [savedPetIds, setSavedPetIds] = useState(getSavedPetIds());
 
-  const [addPet ] = useMutation(ADD_PET)
+  const [addPet] = useMutation(ADD_PET)
 
   // set up useEffect hook to save `savedPetIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -34,8 +38,8 @@ const SearchPets = () => {
 
     try {
       const response = await searchPetfinder(searchInput);
-      console.log(response, "line 37");
-      console.log(response.animals, "line 38");
+      // console.log(response, "line 37");
+      // console.log(response.animals, "line 38");
 
       const petData = response.animals.map((pet) => ({
         petId: pet.id,
@@ -44,6 +48,17 @@ const SearchPets = () => {
         description: pet.description,
         image: pet.primary_photo_cropped?.full || '',
         link: pet.url,
+        gender: pet.gender,
+        breeds: pet.breeds.primary,
+        mixed: pet.breeds.mixed,
+        size: pet.size,
+        status: pet.status,
+        org_id: pet.organization_id,
+        city: pet.contact.address.city,
+        state: pet.contact.address.state,
+        email: pet.contact.email,
+        phone: pet.contact.phone,
+        distance: pet.distance
       }));
       petData.forEach((d) => console.log(d));
 
@@ -82,6 +97,12 @@ const SearchPets = () => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const navigateAnimal = (petId) => {
+    navigate(`/animal/${petId}`);
+  };
+
   return (
     <>
       <Jumbotron fluid className='text-light bg-dark'>
@@ -118,26 +139,31 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <Card key={pet.petId} border='dark'>
-                {pet.image ? (
-                  <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
-                ) : null}
-                <Card.Body>
-                  <Card.Title>{pet.name}</Card.Title>
-                  <p className='small'>Type: {pet.type}</p>
-                  <Card.Text>{pet.description}</Card.Text>
-                  {Auth.loggedIn() && (
-                    <Button
-                      disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                      className='btn-block btn-info'
-                      onClick={() => handleSavePet(pet.petId)}>
-                      {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
-                        ? 'This pet has already been saved!'
-                        : 'Save this Pet!'}
-                    </Button>
-                  )}
-                </Card.Body>
-              </Card>
+              <div key={pet.petId} onClick={() => navigateAnimal(pet.petId)}>
+                {/* <Routes>
+                  <Route path="/animal" element={<AnimalPage />} />
+                </Routes> */}
+                <Card border='dark'>
+                  {pet.image ? (
+                    <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                  ) : null}
+                  <Card.Body>
+                    <Card.Title>{pet.name}</Card.Title>
+                    <p className='small'>Type: {pet.type}</p>
+                    <Card.Text>{pet.description}</Card.Text>
+                    {Auth.loggedIn() && (
+                      <Button
+                        disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
+                        className='btn-block btn-info'
+                        onClick={() => handleSavePet(pet.petId)}>
+                        {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
+                          ? 'This pet has already been saved!'
+                          : 'Save this Pet!'}
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              </div>
             );
           })}
         </CardColumns>
