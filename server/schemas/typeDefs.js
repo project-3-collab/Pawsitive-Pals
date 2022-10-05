@@ -49,6 +49,7 @@ const typeDefs = gql`
     hosuingStatus: HousingStatus
     housingComment: String
     otherComment: String
+    approvalStatus: Int
   }
 
   type Auth {
@@ -75,7 +76,7 @@ const typeDefs = gql`
   type Query {
     user: User
     playdateRequests: [PlayDateRequest]
-    playdateRequest (playdateId: ID!) : PlaydateRequest
+    playdateRequest (playdateId: ID!) : PlayDateRequest
 
   }
 
@@ -84,7 +85,7 @@ const typeDefs = gql`
     savePet(name: String, description: String, petId: Float!, image: String, link: String, type: String!): User
     deletePet(_id: ID!): User
     login(email: String!, password: String!): Auth
-    submitRequest(input: PlayDateRequestInput):  User
+    submitRequest(input: PlayDateRequestInput): User
   }
 `;
 
