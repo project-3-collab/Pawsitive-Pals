@@ -38,7 +38,7 @@ const AppNavbar = () => {
                       </Nav.Link>
                     </>
                   ) : (
-                    <Nav.Link as={Link} to='/profile' style={{ color: "#003049"}}>
+                    <Nav.Link as={Link} to='/saved' style={{ color: "#003049"}}>
                       Profile Page
                     </Nav.Link>
                   )

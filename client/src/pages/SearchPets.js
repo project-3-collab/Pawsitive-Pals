@@ -137,7 +137,7 @@ const SearchPets = () => {
                 />
               </Col>
               <Col xs={12} md={4} lg={4}>
-                <Button type='submit' variant='success' size='lg'>
+                <Button type='submit' className='med-orange-bg' size='lg'>
                   Submit Search
                 </Button>
               </Col>
