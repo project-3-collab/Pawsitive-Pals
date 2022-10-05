@@ -1,6 +1,8 @@
-import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Jumbotron, Container, CardColumns, Card, Button, Modal } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
+import PlaydateRequest from '../components/PlaydateRequest';
 
 import { removePetId } from '../utils/localStorage';
 import { DELETE_PET } from '../utils/mutations'
@@ -13,12 +15,15 @@ const SavedPets = () => {
     variables: { _id: Auth.getProfile().data._id }
   });
 
-  const [ deletePet ] = useMutation(DELETE_PET);
+  const [deletePet] = useMutation(DELETE_PET);
 
-  const userData = data?.user ;
+  const userData = data?.user;
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    // create function that accepts the pet's mongo _id value as param and deletes the pet from the database
+  // create function that accepts the pet's mongo _id value as param and deletes the pet from the database
   const handleDeletePet = async (pet) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -39,6 +44,7 @@ const SavedPets = () => {
       console.error(err);
     }
   };
+
 
   // if data isn't here yet, say so
   if (!userData) {
@@ -67,6 +73,26 @@ const SavedPets = () => {
                   <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
                   <p className='small dk-blue-text'>Type: {pet.type}</p>
                   <Card.Text className='dk-blue-text'>{pet.description}</Card.Text>
+                  
+                  <Button variant="primary" className='btn-block med-orange-bg' onClick={handleShow}>
+                    Request a play date!
+                  </Button>
+
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Request a play date!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body><PlaydateRequest/></Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                      <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+
                   <Button className='btn-block med-orange-bg' onClick={() => handleDeletePet(pet)}>
                     Delete this Pet!
                   </Button>

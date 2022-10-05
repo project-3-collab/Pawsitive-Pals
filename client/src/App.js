@@ -43,16 +43,11 @@ function App() {
               path='/saved'
               element={<SavedPets />}
             />
-            {/* <Route
-              path='/animalprofile'
-              element={< />}
-            /> */}
             <Route
               path='*'
               element={<h1 className='display-2'>Wrong page!</h1>}
             />
           </Routes>
-          <PlaydateRequest />
         </>
       </Router>
     </ApolloProvider >
