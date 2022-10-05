@@ -81,19 +81,20 @@ const resolvers = {
     },
 
     submitRequest: async (parent, args, context) => {
-
       if (context.user) {
         const playdateRequest = await PlaydateRequest.create({
           ...args.input,
           requester: context.user.username,
         });
-
-        return await User.findOneAndUpdate(
+        
+        await User.findOneAndUpdate(
           { _id: context.user._id },
           {
             $addToSet: { submittedRequests: playdateRequest.id}
           }
         );
+          
+        return playdateRequest;
       }
 
       throw new AuthenticationError('You need to be logged in!');

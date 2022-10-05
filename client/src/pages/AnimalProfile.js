@@ -149,7 +149,7 @@ export default function AnimalPage() {
           <Modal.Body>
             <Tab.Content>
               <Tab.Pane eventKey='requestPlaydate'>
-                <PlaydateRequestForm handleModalClose={(pet) => setShowModal(false)} />
+                <PlaydateRequestForm handleModalClose={() => setShowModal(false)} />
               </Tab.Pane>
             </Tab.Content>
           </Modal.Body>

@@ -28,6 +28,7 @@ const UserProfile = () => {
   };
 
   const [showModal, setShowModal] = useState(false);
+  const [selectedPet, setSelectedPet] = useState("");
 
   // create function that accepts the pet's mongo _id value as param and deletes the pet from the database
   const handleDeletePet = async (pet) => {
@@ -48,6 +49,12 @@ const UserProfile = () => {
       console.error(err);
     }
   };
+
+  const handlePlaydateRequest = (petId, show) => {
+    setShowModal(show);
+    setSelectedPet(petId);
+  }
+
   // if data isn't here yet, say so
   if (!userData) {
     return <h2>LOADING...</h2>;
@@ -94,7 +101,7 @@ const UserProfile = () => {
                         </Button>
                       </td>
                       <td>
-                        <Button className='btn-block med-orange-bg' onClick={() => setShowModal(true)}>
+                        <Button className='btn-block med-orange-bg' onClick={() => handlePlaydateRequest(pet.petId, true)}>
                           Request Playdate
                         </Button>
                       </td>
@@ -121,7 +128,7 @@ const UserProfile = () => {
           <Modal.Body>
             <Tab.Content>
               <Tab.Pane eventKey='requestPlaydate'>
-                <PlaydateRequestForm handleModalClose={(pet) => setShowModal(false)} />
+                <PlaydateRequestForm data={selectedPet} handleModalClose={(pet) => setShowModal(false)} />
               </Tab.Pane>
             </Tab.Content>
           </Modal.Body>

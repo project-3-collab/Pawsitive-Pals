@@ -46,10 +46,13 @@ const typeDefs = gql`
     petId: String
     fromDate: String
     toDate: String
-    housingType: String
-    housingStatus: HousingStatus
-    housingComment: String
-    otherComment: String
+    hasToddlers: Boolean
+    hasKids: Boolean
+    hasTeens: Boolean
+    hasOtherAdults: Boolean
+    animalsInfo: String
+    homeInfo: String
+    reason: String
     approvalStatus: Int
   }
 
@@ -67,17 +70,20 @@ const typeDefs = gql`
     petId: String!
     fromDate: String
     toDate: String
-    housingType: String
-    housingStatus: HousingStatus
-    housingComment: String
-    otherComment: String
+    hasToddlers: Boolean
+    hasKids: Boolean
+    hasTeens: Boolean
+    hasOtherAdults: Boolean
+    animalsInfo: String
+    homeInfo: String
+    reason: String
     approvalStatus: Int
   }
 
   type Query {
     user: User
     playdateRequests: [PlaydateRequest]
-    playdateRequest (playdateId: ID!) : PlaydateRequest
+    playdateRequest(playdateId: ID!) : PlaydateRequest
 
   }
 
