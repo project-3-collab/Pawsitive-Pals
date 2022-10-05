@@ -22,7 +22,7 @@ const typeDefs = gql`
     experience: String
     housing: String
     savedPets: [Pet]
-    submittedRequests: [PlayDateRequest]
+    submittedRequests: [PlaydateRequest]
   }
 
   type Pet {
@@ -40,7 +40,7 @@ const typeDefs = gql`
     contact: [String]
   }
 
-  type PlayDateRequest {
+  type PlaydateRequest {
     _id: ID!
     pet: Pet
     fromDate: String
@@ -62,7 +62,7 @@ const typeDefs = gql`
     OWN
   }
 
-  input PlayDateRequestInput {
+  input PlaydateRequestInput {
     petId: String!
     fromDate: String
     toDate: String
@@ -75,8 +75,8 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    playdateRequests: [PlayDateRequest]
-    playdateRequest (playdateId: ID!) : PlayDateRequest
+    playdateRequests: [PlaydateRequest]
+    playdateRequest (playdateId: ID!) : PlaydateRequest
 
   }
 
@@ -85,7 +85,7 @@ const typeDefs = gql`
     savePet(name: String, description: String, petId: Float!, image: String, link: String, type: String!): User
     deletePet(_id: ID!): User
     login(email: String!, password: String!): Auth
-    submitRequest(input: PlayDateRequestInput): User
+    submitRequest(input: PlaydateRequestInput): User
   }
 `;
 

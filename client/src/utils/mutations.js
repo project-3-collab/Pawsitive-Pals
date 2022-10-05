@@ -74,7 +74,7 @@ export const DELETE_PET = gql`
 `;
 
 export const SUBMIT_REQUEST = gql`
-    mutation SubmitRequest($id: PlayDateRequestInput!) {
+    mutation SubmitRequest($id: PlaydateRequestInput!) {
         submitRequest(input: $input) {
             _id
             username

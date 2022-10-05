@@ -26,9 +26,9 @@ const playdateRequestSchema = new Schema(
             type: String
         },
         approvalStatus: {
-            type: Number
-        
+            type: Number        
         }
     });
 
-module.exports = playdateRequestSchema
+const PlaydateRequest = model('PlaydateRequest', playdateRequestSchema)
+module.exports = PlaydateRequest

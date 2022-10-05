@@ -11,6 +11,26 @@ import { useMutation } from '@apollo/client';
 // import AnimalPage from './animalProfile';
 // import AnimalPage from './AnimalProfile';
 
+// import Dropdown from 'react-bootstrap/Dropdown';
+// import DropdownButton from 'react-bootstrap/DropdownButton';
+
+import Select from 'react-select';
+// import PhotoUnavailable from '../../public/photo-unavilible-Icon.png'
+
+const styles = {
+  dropdownMenuStyle: {
+    color: 'black',
+  }
+};
+
+const animalTypes = [
+  { label: 'Dog', value: 'dog' },
+  { label: 'Cat', value: 'cat' },
+  { label: 'Bird', value: 'bird' },
+  { label: 'Horse', value: 'horse' },
+  { label: 'Rabbit', value: 'Rabbit' },
+];
+
 const SearchPets = () => {
   // create state for holding returned google api data
   const [searchedPets, setSearchedPets] = useState([]);
@@ -108,19 +128,15 @@ const SearchPets = () => {
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
           <h1>Search for Pets!</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>
             <Form.Row>
               <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a pet'
-                />
+              <Select
+                options={animalTypes}
+                onChange={opt => setSearchInput(opt.label, opt.value)}
+              />
               </Col>
-              <Col xs={12} md={4}>
+              <Col xs={12} md={4} lg={4}>
                 <Button type='submit' variant='success' size='lg'>
                   Submit Search
                 </Button>
