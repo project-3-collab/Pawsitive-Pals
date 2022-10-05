@@ -1,10 +1,10 @@
-import { useMutation } from '@apollo/client';
+// import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { Form, Button, Container, Jumbotron } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { SUBMIT_REQUEST } from '../utils/mutations';
+// import { SUBMIT_REQUEST } from '../utils/mutations';
 import Auth from '../utils/auth';
 // import { Form, Button, Alert, } from 'react-bootstrap';
 
@@ -22,7 +22,7 @@ const PlaydateRequest = (props) => {
     const currentDate = new Date();
     const [startDate, setStartDate] = useState(currentDate);
     const [endDate, setEndDate] = useState(new Date().setDate(currentDate.getDate()+3));
-    const [submitRequest] = useMutation(SUBMIT_REQUEST);
+    // const [submitRequest] = useMutation(SUBMIT_REQUEST);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault(); 
@@ -121,42 +121,35 @@ const PlaydateRequest = (props) => {
                                 minDate={startDate}
                             />
                         </label>
-                        <h6>Housing:</h6>
-                        <p>give us a sneak peek of your living space to see if it will fit the needs of the animal you are requesting</p>
+                        <h6>Enviornment:</h6>
+                        <p>Give us a sneak peek of your enviornment to see if it will fit the needs of the animal you are requesting</p>
                         <label>
-                            Apartment
-                            <input type='checkbox' name='housingType' 
-                                value={props.housingType}
-                                required
-                            ></input>
-                        </label>
-                        <br></br>
-                        <label>
-                            Single-family
-                            <input type='checkbox' name='housingType' 
-                                value={props.housingType}
-                                required
-                            ></input>
-                        </label>
-                        <br></br>
-                        <label>
-                            Other:
-                            <input type='input' name='housingType' 
-                                value={props.housingType}
-                                required
-                            ></input>
-                        </label>
-                        <br></br>
-                        <label>
-                            Own?
-                            <input type='checkbox' name='housingMethod' 
+                            Children 5yrs old or younger?
+                            <input type='checkbox' name='todlers' 
                                 value={props.housingMethod}
                                 required
                             ></input>
                         </label>
+                        <br></br>
                         <label>
-                            Rent?
-                            <input type='checkbox' name='housingMethod' 
+                            Children ages 6-17 years old
+                            <input type='checkbox' name='youngKids' 
+                                value={props.housingMethod}
+                                required
+                            ></input>
+                        </label>
+                        <br></br>
+                        <label>
+                            Other animals in the house?
+                            <input type='checkbox' name='otherAnimals' 
+                                value={props.housingMethod}
+                                required
+                            ></input>
+                        </label>
+                        <br></br>
+                        <label>
+                            If answered yes, please list all animals currently living at your home.
+                            <input type='textarea' name='listAnimals' 
                                 value={props.housingMethod}
                                 required
                             ></input>
