@@ -14,7 +14,7 @@ const SavedPets = () => {
   const { data } = useQuery(QUERY_USER, {
     variables: { _id: Auth.getProfile().data._id }
   });
-
+  
   const [deletePet] = useMutation(DELETE_PET);
 
   const userData = data?.user;
@@ -37,8 +37,6 @@ const SavedPets = () => {
         variables: { id, token },
       });
 
-      console.log(deletedPet)
-
       removePetId(pet.petId);
     } catch (err) {
       console.error(err);
@@ -54,7 +52,7 @@ const SavedPets = () => {
   return (
     <>
       <Jumbotron fluid className='text-light yellow-bg'>
-        <Container>
+        <Container style={{ color: "black"}}> 
           <h1>Viewing saved Pets!</h1>
         </Container>
       </Jumbotron>

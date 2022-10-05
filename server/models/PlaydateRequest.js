@@ -30,6 +30,5 @@ const playdateRequestSchema = new Schema(
         
         }
     });
-    const PlaydateRequest = model('PlaydateRequest', playdateRequestSchema)
 
-module.exports = PlaydateRequest
+module.exports = playdateRequestSchema

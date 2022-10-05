@@ -22,28 +22,28 @@ const AppNavbar = () => {
           </Navbar.Brand>
           <Navbar.Toggle className="custom-toggler navbar-toggler" aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
-            <Nav className='ml-auto'>
+            <Nav className='ml-auto' >
               <Nav.Link as={Link} to='/'>
               </Nav.Link>
               {/* if user is logged in show saved animals and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/saved'>
+                  <Nav.Link as={Link} to='/saved' style={{ color: "black"}}>
                     See Your Pets
                   </Nav.Link>
                   {Auth.isAdmin() ? (
                     <>
-                      <Nav.Link as={Link} to='/admin'>
+                      <Nav.Link as={Link} to='/admin' style={{ color: "black"}}>
                         Admin Page
                       </Nav.Link>
                     </>
                   ) : (
-                    <Nav.Link as={Link} to='/profile'>
+                    <Nav.Link as={Link} to='/profile' style={{ color: "black"}}>
                       Profile Page
                     </Nav.Link>
                   )
                   }
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                  <Nav.Link onClick={Auth.logout} style={{ color: "black"}}>Logout</Nav.Link>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link>

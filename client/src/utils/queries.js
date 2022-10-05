@@ -18,6 +18,22 @@ export const QUERY_USER = gql`
 }
 `;
 
+export const QUERY_PET = gql`
+  query singlePet($petId: ID!) {
+    pet(petId: $petId) {
+      _id
+      petId
+      name
+      description
+      image
+      link
+      type
+      attributes
+      breed
+    }
+  }
+  `;
+  
 export const QUERY_PLAYDATES = gql`
 query Playdates {
   playdateRequests {
