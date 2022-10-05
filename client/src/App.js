@@ -2,7 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchPets from './pages/SearchPets';
 import SavedPets from './pages/SavedPets';
+
+import AdministratorRequests from './pages/AdministratorRequests';
+
 import PlaydateRequest from './components/PlaydateRequest';
+
 import Navbar from './components/Navbar';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
@@ -43,6 +47,15 @@ function App() {
               path='/saved'
               element={<SavedPets />}
             />
+             <Route
+              path='/adminRequest'
+              element={<AdministratorRequests/>}
+            />
+
+            {/* <Route
+              path='/animalprofile'
+              element={< />}
+            /> */}
             <Route
               path='*'
               element={<h1 className='display-2'>Wrong page!</h1>}
