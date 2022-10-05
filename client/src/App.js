@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 import SearchPets from './pages/SearchPets';
 import UserProfile from './pages/UserProfile';
 import AdministratorRequests from './pages/AdministratorRequests';
-import PlaydateRequest from './components/PlaydateRequest';
 import Navbar from './components/Navbar';
 // import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 // import { setContext } from '@apollo/client/link/context';
