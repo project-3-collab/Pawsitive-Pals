@@ -144,7 +144,7 @@ const SearchPets = () => {
                 </Routes> */}
                 <Card key={pet.petId} border='dark' className='dk-blue-text lt-cream-bg text-center'>
                   {pet.image ? (
-                    <Card.Img className='rounded-circle card-pics mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                    <Card.Img className='rounded-circle card-pics img-thumbnail mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                   ) : null}
                   <Card.Body className='dk-blue-text'>
                     <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
