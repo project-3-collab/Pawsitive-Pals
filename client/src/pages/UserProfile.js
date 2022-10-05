@@ -1,9 +1,8 @@
-import {
-  Jumbotron,
-  Container,
-  Button
-} from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Jumbotron, Container, CardColumns, Card, Button, Modal } from 'react-bootstrap';
 import Auth from '../utils/auth';
+import PlaydateRequest from '../components/PlaydateRequest';
+
 import { removePetId } from '../utils/localStorage';
 import { DELETE_PET } from '../utils/mutations'
 import { QUERY_USER } from '../utils/queries'
@@ -22,7 +21,9 @@ const UserProfile = () => {
   const [deletePet] = useMutation(DELETE_PET);
 
   const userData = data?.user;
-
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // create function that accepts the pet's mongo _id value as param and deletes the pet from the database
   const handleDeletePet = async (pet) => {
@@ -54,7 +55,7 @@ const UserProfile = () => {
   return (
     <>
       <Jumbotron fluid className='text-light yellow-bg'>
-        <Container>
+      <Container style={{ color: "black"}}> 
           <h1>Checkout all your PAWSitive Pals!</h1>
         </Container>
       </Jumbotron>
