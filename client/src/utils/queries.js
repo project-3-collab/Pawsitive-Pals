@@ -17,3 +17,52 @@ export const QUERY_USER = gql`
   }
 }
 `;
+
+export const QUERY_PET = gql`
+  query singlePet($petId: ID!) {
+    pet(petId: $petId) {
+      _id
+      petId
+      name
+      description
+      image
+      link
+      type
+      attributes
+      breed
+    }
+  }
+  `;
+  
+export const QUERY_PLAYDATES = gql`
+query Playdates {
+  playdateRequests {
+    petId
+    fromDate
+    toDate
+    housingType
+    housingStatus
+    housingComment
+    otherComment
+    approvalStatus
+  }
+}
+`;
+
+export const QUERY_SINGLE_PLAYDATE = gql`
+query SinglePlaydate ($playdateId:ID!) {
+  playdateRequest (playdateId: $playdateId) {
+    petId
+    fromDate
+    toDate
+    housingType
+    housingStatus
+    housingComment
+    otherComment
+    approvalStatus
+  }
+}
+`;
+
+
+

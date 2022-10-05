@@ -24,7 +24,11 @@ const playdateRequestSchema = new Schema(
         },
         otherComment: {
             type: String
+        },
+        approvalStatus: {
+            type: Number        
         }
     });
 
-module.exports = playdateRequestSchema;
+const PlaydateRequest = model('PlaydateRequest', playdateRequestSchema)
+module.exports = PlaydateRequest

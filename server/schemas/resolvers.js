@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, PlaydateRequest, Pet } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 
@@ -7,6 +7,13 @@ const resolvers = {
     user: async (parent, args, context) => {
       return User.findById(context.user._id)
     },
+    //check the context (make sure only admin can see)
+    playdateRequests: async (parent, args,context) => {
+      return PlaydateRequest.find()
+    },
+    playdateRequest: async (parent, args, context) => {
+      return PlaydateRequest.findOne({_id: args.playdateId})
+    }
   },
 
   Mutation: {

@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+// import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Auth from '../utils/auth';
 import { searchPetfinder } from '../utils/API';
 import { savePetIds, getSavedPetIds } from '../utils/localStorage';
-import { ADD_PET } from '../utils/mutations'
-import { useMutation } from '@apollo/client'
+import { ADD_PET } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
+// import AnimalPage from './animalProfile';
+// import AnimalPage from './AnimalProfile';
+
+// import Dropdown from 'react-bootstrap/Dropdown';
+// import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import Select from 'react-select';
 // import PhotoUnavailable from '../../public/photo-unavilible-Icon.png'
@@ -51,8 +58,8 @@ const SearchPets = () => {
 
     try {
       const response = await searchPetfinder(searchInput);
-      console.log(response, "line 37");
-      console.log(response.animals, "line 38");
+      // console.log(response, "line 37");
+      // console.log(response.animals, "line 38");
 
       const petData = response.animals.map((pet) => ({
         petId: pet.id,
@@ -61,6 +68,17 @@ const SearchPets = () => {
         description: pet.description,
         image: pet.primary_photo_cropped?.full || '',
         link: pet.url,
+        gender: pet.gender,
+        breeds: pet.breeds.primary,
+        mixed: pet.breeds.mixed,
+        size: pet.size,
+        status: pet.status,
+        org_id: pet.organization_id,
+        city: pet.contact.address.city,
+        state: pet.contact.address.state,
+        email: pet.contact.email,
+        phone: pet.contact.phone,
+        distance: pet.distance
       }));
       petData.forEach((d) => console.log(d));
 
@@ -75,36 +93,20 @@ const SearchPets = () => {
   const handleSavePet = async (petId) => {
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
-  
+
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
-    const userId = Auth.getUserData().userId;
-    const username = Auth.getUserData().username;
-
-    console.log("petToSave", petToSave);
-    // try {
-    //   const petData = await addPet({
-    //     variables: { ...petToSave, userId, username },
-    //   });
-
-    console.log("userId", userId);
-    console.log("username", username);
 
     try {
       const petData = await addPet({
-        variables: {
-          _id: userId,
-          username: username,
-          ...petToSave
-        },
+        variables: { ...petToSave },
       });
 
-      // Not being hit!
-      console.log("petData", petData)
+      console.log(petData)
 
       // if pet successfully saves to user's account, save pet id to state
       setSavedPetIds([...savedPetIds, petToSave.petId]);
@@ -115,22 +117,28 @@ const SearchPets = () => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const navigateAnimal = (petId) => {
+    navigate(`/animal/${petId}`);
+  };
+
   return (
     <>
-      <Jumbotron fluid className='text-light yellow-bg'>
+      <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Search for a pal:</h1>
+          <h1>Search for Pets!</h1>
           <Form onSubmit={handleFormSubmit} style={styles.dropdownMenuStyle}>
             <Form.Row>
-              <Col xs={12} md={12} lg={8}>
-                <Select
-                  options={animalTypes}
-                  onChange={opt => setSearchInput(opt.label, opt.value)}
-                />
+              <Col xs={12} md={8}>
+              <Select
+                options={animalTypes}
+                onChange={opt => setSearchInput(opt.label, opt.value)}
+              />
               </Col>
               <Col xs={12} md={4} lg={4}>
-                <Button type='submit' className='med-orange-bg' size='50px'>
-                  Find
+                <Button type='submit' variant='success' size='lg'>
+                  Submit Search
                 </Button>
               </Col>
             </Form.Row>
@@ -139,7 +147,7 @@ const SearchPets = () => {
       </Jumbotron>
 
       <Container>
-        <h2 className='dk-orange-txt'>
+        <h2>
           {searchedPets.length
             ? `Viewing ${searchedPets.length} results:`
             : 'Search for an animal to view options of PAWSible Pals'}
@@ -147,26 +155,31 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <Card key={pet.petId} border='dark' className='dk-blue-text lt-cream-bg text-center'>
-                {pet.image ? (
-                  <Card.Img className='rounded-circle card-pics mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
-                ) : null}
-                <Card.Body className='dk-blue-text'>
-                  <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
-                  <p className='small'>Type: {pet.type}</p>
-                  <Card.Text>{pet.description}</Card.Text>
-                  {Auth.loggedIn() && (
-                    <Button
-                      disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                      className='btn-block med-orange-bg'
-                      onClick={() => handleSavePet(pet.petId)}>
-                      {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
-                        ? 'This pet has already been saved!'
-                        : 'Save this Pet!'}
-                    </Button>
-                  )}
-                </Card.Body>
-              </Card>
+              <div key={pet.petId} onClick={() => navigateAnimal(pet.petId)}>
+                {/* <Routes>
+                  <Route path="/animal" element={<AnimalPage />} />
+                </Routes> */}
+                <Card border='dark'>
+                  {pet.image ? (
+                    <Card.Img src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                  ) : null}
+                  <Card.Body>
+                    <Card.Title>{pet.name}</Card.Title>
+                    <p className='small'>Type: {pet.type}</p>
+                    <Card.Text>{pet.description}</Card.Text>
+                    {Auth.loggedIn() && (
+                      <Button
+                        disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
+                        className='btn-block btn-info'
+                        onClick={() => handleSavePet(pet.petId)}>
+                        {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
+                          ? 'This pet has already been saved!'
+                          : 'Save this Pet!'}
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              </div>
             );
           })}
         </CardColumns>
