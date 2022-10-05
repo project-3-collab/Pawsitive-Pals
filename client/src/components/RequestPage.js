@@ -4,80 +4,88 @@ import Auth from '../utils/auth';
 
 import { QUERY_USER } from '../utils/queries'
 import { useMutation, useQuery } from '@apollo/client'
+import treeKill from 'tree-kill';
+
+//declaring variables
 
 const viewIndRequest = () => {
+const chooseApprove = document.querySelector ("#approveButton");
+const chooseDeny = document.querySelector ("#denyButton");
 
-  const { data } = useQuery(QUERY_USER, {
-    variables: { _id: Auth.getProfile().data._id }
-  });
+//this function is the event handler for the approve Button
+//we are trying to say that this information translates to TRUE o we can query later
+chooseApprove.addEventListener("click", function () {
+  const approvedForm = createInput.value;
+
+ //onclick listener that sets value to treeKill
+ //useState to change state of value
+//change value in schema to true or valse
+  
+  
 
 
+//this function is the event handler for the deny Button
+const chooseDeny = document.createElement("button");
+chooseDeny.addEventListener("click", function () {
+  const deniedForm = createInput.value;
 
-  const userData = data?.user ;
+}
 
+//const { data } = useQuery(QUERY_USER, {
+//variables: { _id: Auth.getProfile().data._id }
+//});
+//const userData = data?.user ;
 
-    // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteBook = async (book) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+// create function that accepts the book's mongo _id value as param and deletes the book from the database
+//   const handleDeleteBook = async (book) => {
+//     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    const id = book._id
+//     const id = book._id
 
-    if (!token) {
-      return false;
-    }
-    try {
-      const deletedBook = await deleteBook({
-        variables: { id, token },
-      });
+//     if (!token) {
+//       return false;
+//     }
+//     try {
+//       const deletedBook = await deleteBook({
+//         variables: { id, token },
+//       });
 
-      console.log(deletedBook)
+//       console.log(deletedBook)
 
       
-    } catch (err) {
-      console.error(err);
-    }
-  };
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
 
   // if data isn't here yet, say so
-  if (!userData) {
-    return <h2>LOADING...</h2>;
-  }
+ //if (!userData) {
+ //   return <h2>LOADING...</h2>;
+  //}
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
-        <Container>
-          <h1>Viewing saved books!</h1>
-        </Container>
-      </Jumbotron>
-      <Container>
-        <h2>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
-            : 'You have no saved books!'}
-        </h2>
-        <CardColumns>
-          {userData.savedBooks.map((book) => {
-            return (
-              <Card key={book.bookId} border='dark'>
-                {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
-                <Card.Body>
-                  <Card.Title>{book.title}</Card.Title>
-                  <p className='small'>Authors: {book.authors}</p>
-                  <Card.Text>{book.description}</Card.Text>
-                  <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book)}>
-                    Delete this Book!
-                  </Button>
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-      </Container>
+      <ListGroup>
+      <ListGroup.Item>Cras justo odio</ListGroup.Item>
+      <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+      <ListGroup.Item>Morbi leo risus</ListGroup.Item>
+      <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+      <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+    </ListGroup>
+
+//buttons
+    <div className="mb-2">
+        <Button class = "approveButton" variant="primary" size="lg">
+         Accept
+        </Button>{' '}
+        <Button class = "denyButton" variant="secondary" size="lg">
+          Deny
+        </Button>
+      </div>
     </>
   );
 };
 
-export default SavedBooks;
+export default viewIndRequest;
 
 
