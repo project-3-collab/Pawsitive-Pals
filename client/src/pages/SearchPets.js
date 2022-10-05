@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import Heart from "react-animated-heart";
+import Heart from "../components/Heart/Heart.js";
 
 // import { Routes, Route, useNavigate } from 'react-router-dom';
 
@@ -86,11 +86,11 @@ const SearchPets = () => {
   };
   // create function to handle saving a pet to our database
   const handleSavePet = async (petId) => {
+    
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-    const [ isClick, setClick ] = useState(false);
     if (!token) {
       return false;
     }
@@ -107,8 +107,9 @@ const SearchPets = () => {
   };
   // const navigate = useNavigate();
   // const navigateAnimal = (petId) => {
-  //   navigate(`/animal/${petId}`);
-  // };
+    //   navigate(`/animal/${petId}`);
+    // };
+    const [ isClick, setClick ] = useState(false);
   return (
     <>
       <Jumbotron fluid className='text-light yellow-bg'>
@@ -170,10 +171,6 @@ const SearchPets = () => {
                           ? 'This pet has already been saved!'
                           : 'Save this Pet!'}
                       </Button>
-
-
-
-
                     )}
                   </Card.Body>
                 </Card>
