@@ -1,12 +1,12 @@
 // import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
-import { Form, Container, Jumbotron, Button } from 'react-bootstrap';
+import { Form, Alert, Jumbotron, Button } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from '@apollo/client'
 
 
-import { SUBMIT_REQUEST } from '../utils/mutations';
+import { SUBMIT_REQUEST, VALIDATE_PLAYDATE_REQUEST } from '../utils/mutations';
 import Auth from '../utils/auth';
 //import { Form, Alert, } from 'react-bootstrap';
 
@@ -19,6 +19,8 @@ const PlaydateRequest = (props) => {
     const [animalsInfo, setAnimalsInfo] = useState("");
     const [homeInfo, setHomeInfo] = useState("");
     const [reason, setReason] = useState("");
+    const [showValidateAlert, setShowValidateAlert] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
     function updateEnvromentCheckbox(order, value) {
         let prevState = [...enviornmentCheckbox];
@@ -27,6 +29,7 @@ const PlaydateRequest = (props) => {
     };
 
     const [submitRequest] = useMutation(SUBMIT_REQUEST);
+    const [validatePlaydateRequest] = useMutation(VALIDATE_PLAYDATE_REQUEST);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -38,31 +41,49 @@ const PlaydateRequest = (props) => {
             return false;
         }
 
-        const input = {
-            petId: String(props.data),
-            fromDate: startDate,
-            toDate: endDate,
-            hasToddlers: enviornmentCheckbox[0],
-            hasKids: enviornmentCheckbox[1],
-            hasTeens: enviornmentCheckbox[2],
-            hasOtherAdults: enviornmentCheckbox[3],
-            animalsInfo: animalsInfo,
-            homeInfo: homeInfo,
-            reason: reason,
-            approvalStatus: 0
+        try {
+            const response = await validatePlaydateRequest({
+                variables: {petId: String(props.data), approvalStatus: 0}
+            })
+    
+            if (response.data.validatePlaydateRequest) {
+                setShowValidateAlert(true);
+                return false;
+            }
+    
+            const input = {
+                petId: String(props.data),
+                fromDate: startDate,
+                toDate: endDate,
+                hasToddlers: enviornmentCheckbox[0],
+                hasKids: enviornmentCheckbox[1],
+                hasTeens: enviornmentCheckbox[2],
+                hasOtherAdults: enviornmentCheckbox[3],
+                animalsInfo: animalsInfo,
+                homeInfo: homeInfo,
+                reason: reason,
+                approvalStatus: 0
+            }
+    
+            await submitRequest({
+                variables: { input: input }
+            });
+        } catch(err) {
+            console.log(err);
+            setShowAlert(true);
         }
-
-        await submitRequest({
-            variables: { input: input }
-        });
-
     };
 
     return (
         <>
             <Jumbotron>
-
                 <Form onSubmit={handleFormSubmit}>
+                    <Alert dismissible onClose={() => setShowValidateAlert(false)} show={showValidateAlert} variant='warning'>
+                        You have already submitted an application for this pal and it is still in review!
+                    </Alert>
+                    <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+                        Error submitting your application, please contact the admin!
+                    </Alert>
                     <Form.Group>
                         <h5>Request Date:</h5>
                         <Form.Label>
@@ -142,7 +163,6 @@ const PlaydateRequest = (props) => {
                         Submit
                     </Button>
                 </Form>
-
             </Jumbotron>
         </>
     )

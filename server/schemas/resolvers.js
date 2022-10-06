@@ -5,19 +5,18 @@ const { AuthenticationError } = require('apollo-server-express');
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
-      return User.findById(context.user._id)
+      return await User.findById(context.user._id);
     },
     //check the context (make sure only admin can see)
     playdateRequests: async (parent, args,context) => {
-      return PlaydateRequest.find()
+      return await PlaydateRequest.find();
     },
     playdateRequest: async (parent, args, context) => {
-      return PlaydateRequest.findOne({_id: args.playdateId})
+      return await PlaydateRequest.findOne({_id: args.playdateId});
     }
   },
 
   Mutation: {
-
     createUser: async (parent, { username, email, password, admin, firstname, lastname, phone, license, age, birthdate, experience, housing, address, city, state, zipcode, country}, context) => {
       const user = await User.create({ username, email, password, admin, firstname, lastname, phone, license, age, birthdate, experience, housing, address, city, state, zipcode, country});
       const token = signToken(user);
@@ -95,6 +94,17 @@ const resolvers = {
         );
           
         return playdateRequest;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    validatePlaydateRequest: async (parent, {petId, approvalStatus}, context) => {
+      if (context.user) {
+        console.log("Requesting");
+        const response = await PlaydateRequest.findOne({petId: petId, approvalStatus: approvalStatus, requester: context.user.username});
+        console.log("Success");
+        return response !== null;
       }
 
       throw new AuthenticationError('You need to be logged in!');

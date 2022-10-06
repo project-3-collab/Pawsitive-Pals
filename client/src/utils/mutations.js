@@ -92,3 +92,9 @@ export const SUBMIT_REQUEST = gql`
         }
     }
 `;
+
+export const VALIDATE_PLAYDATE_REQUEST = gql`
+    mutation ValidatePlaydateRequest($petId: String!, $approvalStatus: Int!) {
+        validatePlaydateRequest (petId: $petId, approvalStatus: $approvalStatus)
+    }
+`;
