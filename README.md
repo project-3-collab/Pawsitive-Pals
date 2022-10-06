@@ -53,10 +53,19 @@ THEN I can plan another playdate with a different animal, plan for an adoption, 
 ​
 ### Screenshot
 ​
+Below is a screenshot showing a search for cat paw pals:
+
+[search results of cats](./client/public/searchDemoScreenshot.png)
+
+Below is a screenshot showing a list of favorite animals saved by a user:
+[user's saved pets](./client/public/savedPetsDemoScreenshot.png)
+
+Below is a screenshot showing the playdate request form:
+[screenshot of playdate request form](./client/public/playdateRequestFormScreenshot.png)
 ​
-### Links
+### Deployment
 ​
-- Live deployment[Heroku-page]()
+- Live deployment[Heroku-page](https://pawsitive-pals.herokuapp.com)
 - Github repository [Github](https://github.com/project-3-collab/Pawsitive-Pals)
 ​
 ## Our process

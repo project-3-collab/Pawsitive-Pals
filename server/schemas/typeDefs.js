@@ -22,7 +22,7 @@ const typeDefs = gql`
     experience: String
     housing: String
     savedPets: [Pet]
-    submittedRequests: [PlayDateRequest]
+    submittedRequests: [PlaydateRequest]!
   }
 
   type Pet {
@@ -40,15 +40,19 @@ const typeDefs = gql`
     contact: [String]
   }
 
-  type PlayDateRequest {
+  type PlaydateRequest {
     _id: ID!
-    pet: Pet
+    requester: String
+    petId: String
     fromDate: String
     toDate: String
-    housingType: String
-    hosuingStatus: HousingStatus
-    housingComment: String
-    otherComment: String
+    hasToddlers: Boolean
+    hasKids: Boolean
+    hasTeens: Boolean
+    hasOtherAdults: Boolean
+    animalsInfo: String
+    homeInfo: String
+    reason: String
     approvalStatus: Int
   }
 
@@ -62,22 +66,25 @@ const typeDefs = gql`
     OWN
   }
 
-  input PlayDateRequestInput {
+  input PlaydateRequestInput {
     petId: String!
     fromDate: String
     toDate: String
-    housingType: String
-    housingStatus: HousingStatus
-    housingComment: String
-    otherComment: String
+    hasToddlers: Boolean
+    hasKids: Boolean
+    hasTeens: Boolean
+    hasOtherAdults: Boolean
+    animalsInfo: String
+    homeInfo: String
+    reason: String
     approvalStatus: Int
   }
 
   type Query {
     user: User
-    playdateRequests: [PlayDateRequest]
-    playdateRequest (playdateId: ID!) : PlayDateRequest
-
+    playdateRequests: [PlaydateRequest]
+    playdateRequest(playdateId: ID!) : PlaydateRequest
+    
   }
 
   type Mutation {
@@ -85,7 +92,8 @@ const typeDefs = gql`
     savePet(name: String, description: String, petId: Float!, image: String, link: String, type: String!): User
     deletePet(_id: ID!): User
     login(email: String!, password: String!): Auth
-    submitRequest(input: PlayDateRequestInput): User
+    submitRequest(input: PlaydateRequestInput): PlaydateRequest
+    validatePlaydateRequest(petId: String!, approvalStatus: Int!): Boolean!
   }
 `;
 

@@ -74,7 +74,10 @@ const userSchema = new Schema(
     savedPets: [petSchema],
 
     // set playdateRequests to be an array of data
-    submittedRequests: [playdateRequestSchema]
+    submittedRequests: [{
+      type: Schema.Types.ObjectId,
+      ref: 'PlaydateRequest'
+    }]
   },
   // set this to use virtual below
   {

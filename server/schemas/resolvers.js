@@ -1,24 +1,22 @@
-const { User, PlayDateRequest, Pet } = require('../models');
+const { User, PlaydateRequest, Pet } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
-const PlaydateRequest = require('../models/PlaydateRequest');
 
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
-      return User.findById(context.user._id)
+      return await User.findById(context.user._id);
     },
     //check the context (make sure only admin can see)
     playdateRequests: async (parent, args,context) => {
-      return PlaydateRequest.find()
+      return await PlaydateRequest.find();
     },
     playdateRequest: async (parent, args, context) => {
-      return PlaydateRequest.findOne({_id: args.playdateId})
+      return await PlaydateRequest.findOne({_id: args.playdateId});
     }
   },
 
   Mutation: {
-
     createUser: async (parent, { username, email, password, admin, firstname, lastname, phone, license, age, birthdate, experience, housing, address, city, state, zipcode, country}, context) => {
       const user = await User.create({ username, email, password, admin, firstname, lastname, phone, license, age, birthdate, experience, housing, address, city, state, zipcode, country});
       const token = signToken(user);
@@ -82,20 +80,35 @@ const resolvers = {
     },
 
     submitRequest: async (parent, args, context) => {
-
       if (context.user) {
-        return await User.findOneAndUpdate(
+        const playdateRequest = await PlaydateRequest.create({
+          ...args.input,
+          requester: context.user.username,
+        });
+        
+        await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: { submittedRequest: args.input }
-          },
-          { new: true }
+            $addToSet: { submittedRequests: playdateRequest.id}
+          }
         );
+          
+        return playdateRequest;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    validatePlaydateRequest: async (parent, {petId, approvalStatus}, context) => {
+      if (context.user) {
+        console.log("Requesting");
+        const response = await PlaydateRequest.findOne({petId: petId, approvalStatus: approvalStatus, requester: context.user.username});
+        console.log("Success");
+        return response !== null;
       }
 
       throw new AuthenticationError('You need to be logged in!');
     }
-
   }
 };
 

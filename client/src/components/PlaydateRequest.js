@@ -1,39 +1,92 @@
 // import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
-import { Form, Container, Jumbotron } from 'react-bootstrap';
+import { Form, Alert, Jumbotron, Button } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useMutation } from '@apollo/client'
 
-// import { SUBMIT_REQUEST } from '../utils/mutations';
+
+import { SUBMIT_REQUEST, VALIDATE_PLAYDATE_REQUEST } from '../utils/mutations';
 import Auth from '../utils/auth';
-// import { Form, Alert, } from 'react-bootstrap';
+//import { Form, Alert, } from 'react-bootstrap';
 
 
 const PlaydateRequest = (props) => {
 
-    const currentDate = new Date();
-    const [startDate, setStartDate] = useState(currentDate);
-    const [endDate, setEndDate] = useState(new Date().setDate(currentDate.getDate()+3));
-    // const [submitRequest] = useMutation(SUBMIT_REQUEST);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [enviornmentCheckbox, setEnviornmentCheckbox] = useState([false, false, false, false]);
+    const [animalsInfo, setAnimalsInfo] = useState("");
+    const [homeInfo, setHomeInfo] = useState("");
+    const [reason, setReason] = useState("");
+    const [showValidateAlert, setShowValidateAlert] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+
+    function updateEnvromentCheckbox(order, value) {
+        let prevState = [...enviornmentCheckbox];
+        prevState[order] = value;
+        setEnviornmentCheckbox(prevState);
+    };
+
+    const [submitRequest] = useMutation(SUBMIT_REQUEST);
+    const [validatePlaydateRequest] = useMutation(VALIDATE_PLAYDATE_REQUEST);
 
     const handleFormSubmit = async (event) => {
-        event.preventDefault(); 
-        
+        event.preventDefault();
+
         // get token
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
         if (!token) {
-        return false;
+            return false;
         }
-      };
+
+        try {
+            const response = await validatePlaydateRequest({
+                variables: {petId: String(props.data), approvalStatus: 0}
+            })
+    
+            if (response.data.validatePlaydateRequest) {
+                setShowValidateAlert(true);
+                return false;
+            }
+    
+            const input = {
+                petId: String(props.data),
+                fromDate: startDate,
+                toDate: endDate,
+                hasToddlers: enviornmentCheckbox[0],
+                hasKids: enviornmentCheckbox[1],
+                hasTeens: enviornmentCheckbox[2],
+                hasOtherAdults: enviornmentCheckbox[3],
+                animalsInfo: animalsInfo,
+                homeInfo: homeInfo,
+                reason: reason,
+                approvalStatus: 0
+            }
+    
+            await submitRequest({
+                variables: { input: input }
+            });
+        } catch(err) {
+            console.log(err);
+            setShowAlert(true);
+        }
+    };
 
     return (
         <>
             <Jumbotron>
-                <Container>
-                    <Form  onSubmit={handleFormSubmit}>
+                <Form onSubmit={handleFormSubmit}>
+                    <Alert dismissible onClose={() => setShowValidateAlert(false)} show={showValidateAlert} variant='warning'>
+                        You have already submitted an application for this pal and it is still in review!
+                    </Alert>
+                    <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+                        Error submitting your application, please contact the admin!
+                    </Alert>
+                    <Form.Group>
                         <h5>Request Date:</h5>
-                        <label>
+                        <Form.Label>
                             From:
                             <DatePicker
                                 selected={startDate}
@@ -42,8 +95,8 @@ const PlaydateRequest = (props) => {
                                 startDate={startDate}
                                 endDate={endDate}
                             />
-                        </label>
-                        <label>
+                        </Form.Label>
+                        <Form.Label>
                             To:
                             <DatePicker
                                 selected={endDate}
@@ -53,57 +106,63 @@ const PlaydateRequest = (props) => {
                                 endDate={endDate}
                                 minDate={startDate}
                             />
-                        </label>
+                        </Form.Label>
+                    </Form.Group>
+                    <Form.Group>
                         <h5>Enviornment:</h5>
-                        <p>Give us a sneak peek of your enviornment to see if it will fit the needs of the animal you are requesting</p>
-                        <label>
-                            Children 5yrs old or younger?
-                            <input type='checkbox' name='todlers' 
-                                value={props.housingMethod}
-                            ></input>
-                        </label>
+                        <p>Give us a sneak peek of your enviornment to see if it will fit the needs of the animal you are requesting.</p>
+                        <Form.Check
+                            type="checkbox"
+                            label="Children 5yrs old or younger living in your home?"
+                            onChange={(e) => updateEnvromentCheckbox(0, e.target.checked)}></Form.Check>
+                        <Form.Check
+                            type="checkbox"
+                            label="Children ages 6-17 years old living in your home?"
+                            onChange={(e) => updateEnvromentCheckbox(1, e.target.checked)}></Form.Check>
+                        <Form.Check
+                            type="checkbox"
+                            label="Other adults 18+ living in your home?"
+                            onChange={(e) => updateEnvromentCheckbox(2, e.target.checked)}></Form.Check>
+                        <Form.Check
+                            type="checkbox"
+                            label="Other animals in the house? List name, age, and type of animal."
+                            onChange={(e) => updateEnvromentCheckbox(3, e.target.checked)}></Form.Check>
                         <br></br>
-                        <label>
-                            Children ages 6-17 years old
-                            <input type='checkbox' name='youngKids' 
-                                value={props.housingMethod}
-                            ></input>
-                        </label>
-                        <br></br>
-                        <label>
-                            Other animals in the house?
-                            <input type='checkbox' name='otherAnimals' 
-                                value={props.housingMethod}
-                            ></input>
-                        </label>
-                        <br></br>
-                        <label>
+                        <Form.Label>
                             If answered yes above, please list all animals currently living at your home.
-                            <input type='textarea' name='listAnimals' 
-                                value={props.housingMethod}
-                                required
-                            ></input>
-                        </label>
+                            <Form.Control
+                                as="textarea"
+                                style={{ width: '350px', resize: 'both' }}
+                                onChange={(e) => setAnimalsInfo(e.target.value)}>
+                            </Form.Control>
+                        </Form.Label>
                         <br></br>
-                        <label>
+                        <Form.Label>
                             If you are renting the home, please provide landlord's or property manager's contact info below:
-                            <br></br>
-                            <textarea type='textarea' name='landlord' 
-                                value={props.landlord}
-                            ></textarea>
-                        </label>
-                        <br></br>
-                        <h5>Experience:</h5>
-                        <label>
-                            Please give us a brief history of your experience with animals (have you owned any pets before?):
-                            <br></br>
-                            <textarea type='textarea' name='experience' 
-                                value={props.experience}
-                                required
-                            ></textarea>
-                        </label>
-                    </Form>
-                </Container>
+                            <Form.Control
+                                as="textarea"
+                                style={{ width: '350px', resize: 'both' }}
+                                onChange={(e) => setHomeInfo(e.target.value)}>
+                            </Form.Control>
+                        </Form.Label>
+                    </Form.Group>
+                    <Form.Group>
+                        <h5>Reason for playdate:</h5>
+                        <Form.Label>
+                            Why do you want this playdate? What fun activities do you plan on doing with your PAW pal?
+                        </Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            style={{ width: '350px', resize: 'both' }}
+                            onChange={(e) => setReason(e.target.value)}>
+                        </Form.Control>
+                    </Form.Group>
+                    <Button
+                        type='submit'
+                        variant='primary'>
+                        Submit
+                    </Button>
+                </Form>
             </Jumbotron>
         </>
     )
