@@ -209,3 +209,26 @@ mark {
   transition: 0.7s;
 
 }
+
+.iconHeartEmpty {
+  background-image: url("../src/assets/icons8-favorite-EMPTY.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 67px;
+  height: 67px;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.iconHeartEmpty:hover,
+.iconHeartEmpty:focus,
+.iconHeartEmpty:active,
+.iconHeartEmpty:disabled {
+  background-image: url("../src/assets/icons8-favorite-FULL.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 67px;
+  height: 67px;
+  background-color: transparent;
+  border-color: transparent;
+}

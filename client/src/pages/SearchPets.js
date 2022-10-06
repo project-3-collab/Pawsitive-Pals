@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import Heart from "../components/Heart/Heart.js";
+import React, { useEffect, useState } from 'react';
+import { Button, Card, CardColumns, Col, Container, Form, Jumbotron } from 'react-bootstrap';
+import iconHeartFull from "../assets/icons8-favorite-FULL.png"
+import iconHeartEmpty from "../assets/icons8-favorite-EMPTY.png"
 
 // import { Routes, Route, useNavigate } from 'react-router-dom';
 
-import Auth from '../utils/auth';
-import { searchPetfinder } from '../utils/API';
-import { savePetIds, getSavedPetIds } from '../utils/localStorage';
-import { ADD_PET } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
+import { searchPetfinder } from '../utils/API';
+import Auth from '../utils/auth';
+import { getSavedPetIds, savePetIds } from '../utils/localStorage';
+import { ADD_PET } from '../utils/mutations';
+import { DELETE_PET } from '../utils/mutations';
+
 // import AnimalPage from './animalProfile';
 // import AnimalPage from './AnimalProfile';
 
@@ -41,6 +43,7 @@ const SearchPets = () => {
   // create state to hold saved petId values
   const [savedPetIds, setSavedPetIds] = useState(getSavedPetIds());
   const [addPet] = useMutation(ADD_PET)
+  const [deletePet] = useMutation(DELETE_PET)
   // set up useEffect hook to save `savedPetIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -89,11 +92,22 @@ const SearchPets = () => {
     
     // find the pet in `searchedPets` state by the matching id
     const petToSave = searchedPets.find((pet) => pet.petId === petId);
+
+    // Write this variable
+    // const petToDelete = 
+
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     if (!token) {
       return false;
     }
+
+    if (savedPetIds?.some((savedPetId) => savedPetId === pet.petId)) {
+        const petData = await deletePet({
+        variables: { ...petToSave },
+    }
+
+
     try {
       const petData = await addPet({
         variables: { ...petToSave },
@@ -155,21 +169,20 @@ const SearchPets = () => {
                     <p className='small'>Type: {pet.type}</p>
                     <Card.Text>{pet.description}</Card.Text>
 
-                    <Heart 
-                      disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
 
-                      isClick={isClick} 
 
-                      onClick={() => setClick(!isClick)} />
+                    
+
+
 
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                        className='btn-block med-orange-bg'
+                        // disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
+                        className='iconHeartEmpty'
                         onClick={() => handleSavePet(pet.petId)}>
-                        {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
+                        {/* {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
                           ? 'This pet has already been saved!'
-                          : 'Save this Pet!'}
+                          : 'Save this Pet!'} */}
                       </Button>
                     )}
                   </Card.Body>
