@@ -3,9 +3,9 @@ import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'reac
 import { Nav, Modal, Tab } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 // import { Routes, Route, useNavigate } from 'react-router-dom';
-import SignUpForm from './SignupForm';
-import LoginForm from './LoginForm';
-
+// import SignUpForm from './SignupForm';
+// import LoginForm from './LoginForm';
+// import LoginModal from './LoginModal'
 import Auth from '../utils/auth';
 import { searchPetfinder } from '../utils/API';
 import { savePetIds, getSavedPetIds } from '../utils/localStorage';
@@ -143,65 +143,30 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <div key={pet.petId} onClick={() => navigateAnimal(pet.petId)}>
+              <div key={pet.petId}>
                 {/* <Routes>
                   <Route path="/animal" element={<AnimalPage />} />
                 </Routes> */}
                 <Card key={pet.petId} border='dark' className='dk-blue-text lt-cream-bg text-center'>
                   {pet.image ? (
-                    <Card.Img className='rounded-circle card-pics img-thumbnail mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                    <Card.Img onClick={() => navigateAnimal(pet.petId)} className='rounded-circle card-pics img-thumbnail mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                   ) : null}
-                  <Card.Body className='dk-blue-text'>
+                  <Card.Body onClick={() => navigateAnimal(pet.petId)} className='dk-blue-text'>
                     <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
                     <p className='small'>{pet.type}</p>
                     <Card.Text>{pet.description}</Card.Text>
-                    {Auth.loggedIn() ? (
-                      <Button
-                        disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                        className='btn-block med-orange-bg'
-                        onClick={() => handleSavePet(pet.petId)}>
-                        {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
-                          ? 'This pet has already been saved!'
-                          : 'Save this Pet!'}
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => setShowModal(true)}>Log in to save pets!
-                      </Button>
-                    )}
                   </Card.Body>
+                  {Auth.loggedIn() && (
+                    <Button
+                      disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
+                      className='btn-block med-orange-bg'
+                      onClick={() => handleSavePet(pet.petId)}>
+                      {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
+                        ? 'This pet has already been saved!'
+                        : 'Save this Pet!'}
+                    </Button>
+                  )}
                 </Card>
-                <Modal
-                  size='lg'
-                  show={showModal}
-                  onHide={() => setShowModal(false)}
-                  aria-labelledby='signup-modal'>
-                  {/* tab container to do either signup or login component */}
-                  <Tab.Container defaultActiveKey='login'>
-                    <Modal.Header closeButton>
-                      <Modal.Title id='signup-modal'>
-                        <Nav variant='pills'>
-                          <Nav.Item>
-                            <Nav.Link className='dk-blue-bg' eventKey='login'>Login</Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link className='dk-blue-bg' eventKey='signup'>Sign Up</Nav.Link>
-                          </Nav.Item>
-                        </Nav>
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Tab.Content>
-                        <Tab.Pane eventKey='login'>
-                          <LoginForm handleModalClose={() => setShowModal(false)} />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey='signup'>
-                          <SignUpForm handleModalClose={() => setShowModal(false)} />
-                        </Tab.Pane>
-                      </Tab.Content>
-                    </Modal.Body>
-                  </Tab.Container>
-                </Modal>
               </div>
             );
           })}
