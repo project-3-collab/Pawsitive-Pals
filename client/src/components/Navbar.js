@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
-import SignUpForm from './SignupForm';
-import LoginForm from './LoginForm';
+import { Navbar, Nav, Container, Modal } from 'react-bootstrap';
 import logo250 from '../assets/PP-logoandwords-blue-150px.png';
 
+import LoginModal from './LoginModal'
 import Auth from '../utils/auth';
 
 const AppNavbar = () => {
@@ -17,7 +16,7 @@ const AppNavbar = () => {
         <Container fluid>
           <Navbar.Brand className=".nav-header" as={Link} to='/'>
             <div className="logoContainer">
-              <img src={logo250} alt='PAWSitive Pals Logo'/>
+              <img src={logo250} alt='PAWSitive Pals Logo' />
             </div>
           </Navbar.Brand>
           <Navbar.Toggle className="custom-toggler navbar-toggler" aria-controls='navbar' />
@@ -28,22 +27,22 @@ const AppNavbar = () => {
               {/* if user is logged in show saved animals and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/' style={{ color: "#003049"}}>
+                  <Nav.Link as={Link} to='/' style={{ color: "#003049" }}>
                     Search PAWSitivePals
                   </Nav.Link>
                   {Auth.isAdmin() ? (
                     <>
-                      <Nav.Link as={Link} to='/admin' style={{ color: "#003049"}}>
+                      <Nav.Link as={Link} to='/admin' style={{ color: "#003049" }}>
                         Admin Page
                       </Nav.Link>
                     </>
                   ) : (
-                    <Nav.Link as={Link} to='/saved' style={{ color: "#003049"}}>
-                      Profile Page
+                    <Nav.Link as={Link} to='/saved' style={{ color: "#003049" }}>
+                      Your Profile
                     </Nav.Link>
                   )
                   }
-                  <Nav.Link onClick={Auth.logout} style={{ color: "#003049"}}>Logout</Nav.Link>
+                  <Nav.Link onClick={Auth.logout} style={{ color: "#003049" }}>Logout</Nav.Link>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link>
@@ -59,30 +58,7 @@ const AppNavbar = () => {
         onHide={() => setShowModal(false)}
         aria-labelledby='signup-modal'>
         {/* tab container to do either signup or login component */}
-        <Tab.Container defaultActiveKey='login'>
-          <Modal.Header closeButton>
-            <Modal.Title id='signup-modal'>
-              <Nav variant='pills'>
-                <Nav.Item>
-                  <Nav.Link className='dk-blue-bg' eventKey='login'>Login</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link className='dk-blue-bg' eventKey='signup'>Sign Up</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Tab.Content>
-              <Tab.Pane eventKey='login'>
-                <LoginForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-              <Tab.Pane eventKey='signup'>
-                <SignUpForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-            </Tab.Content>
-          </Modal.Body>
-        </Tab.Container>
+        <LoginModal />
       </Modal>
     </>
   );

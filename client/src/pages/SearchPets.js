@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 // import { Routes, Route, useNavigate } from 'react-router-dom';
-
+// import SignUpForm from './SignupForm';
+// import LoginForm from './LoginForm';
+// import LoginModal from './LoginModal'
 import Auth from '../utils/auth';
 import { searchPetfinder } from '../utils/API';
 import { savePetIds, getSavedPetIds } from '../utils/localStorage';
@@ -28,10 +30,12 @@ const animalTypes = [
   { label: 'Cat', value: 'cat' },
   { label: 'Bird', value: 'bird' },
   { label: 'Horse', value: 'horse' },
-  { label: 'Rabbit', value: 'Rabbit' },
+  { label: 'Rabbit', value: 'rabbit' },
 ];
 
 const SearchPets = () => {
+
+  const [showModal, setShowModal] = useState(false);
   // create state for holding returned google api data
   const [searchedPets, setSearchedPets] = useState([]);
   // create state for holding our search field data
@@ -121,7 +125,7 @@ const SearchPets = () => {
               </Col>
               <Col xs={12} md={4} lg={4}>
                 <Button type='submit' className='med-orange-bg' size='lg'>
-                  Submit Search
+                  Search
                 </Button>
               </Col>
             </Form.Row>
@@ -138,31 +142,29 @@ const SearchPets = () => {
         <CardColumns>
           {searchedPets.map((pet) => {
             return (
-              <div key={pet.petId} onClick={() => navigateAnimal(pet.petId)}>
+              <div key={pet.petId}>
                 {/* <Routes>
                   <Route path="/animal" element={<AnimalPage />} />
                 </Routes> */}
                 <Card key={pet.petId} border='dark' className='dk-blue-text lt-cream-bg text-center'>
                   {pet.image ? (
-                    <Card.Img className='rounded-circle card-pics img-thumbnail mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
+                    <Card.Img onClick={() => navigateAnimal(pet.petId)} className='rounded-circle card-pics img-thumbnail mt-5' src={pet.image} alt={`The cover for ${pet.type}`} variant='top' />
                   ) : null}
-                  <Card.Body className='dk-blue-text'>
+                  <Card.Body onClick={() => navigateAnimal(pet.petId)} className='dk-blue-text'>
                     <Card.Title className='dk-blue-text'>{pet.name}</Card.Title>
-                    <p className='small'>Type: {pet.type}</p>
+                    <p className='small'>{pet.type}</p>
                     <Card.Text>{pet.description}</Card.Text>
-                    {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
-                        className='btn-block med-orange-bg'
-                        onClick={() => handleSavePet(pet.petId)}>
-                        {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
-                          ? 'This pet has already been saved!'
-                          : 'Save this Pet!'}
-                      </Button>
-
-
-                    )}
                   </Card.Body>
+                  {Auth.loggedIn() && (
+                    <Button
+                      disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
+                      className='btn-block med-orange-bg'
+                      onClick={() => handleSavePet(pet.petId)}>
+                      {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
+                        ? 'This pet has already been saved!'
+                        : 'Save this Pet!'}
+                    </Button>
+                  )}
                 </Card>
               </div>
             );

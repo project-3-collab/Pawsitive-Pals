@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Jumbotron, Container, CardColumns, Card, Button, Modal } from 'react-bootstrap';
+import { Jumbotron, Container, Button, Modal } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
-import PlaydateRequest from '../components/PlaydateRequest';
+import PlaydateRequestForm from '../components/PlaydateRequest';
 
 import { removePetId } from '../utils/localStorage';
 import { DELETE_PET } from '../utils/mutations'
@@ -19,13 +19,17 @@ const UserProfile = () => {
   });
   const [deletePet] = useMutation(DELETE_PET);
   const userData = data?.user;
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
   const navigate = useNavigate();
   const navigateAnimal = (petId) => {
     navigate(`/animal/${petId}`);
   };
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPet, setSelectedPet] = useState("");
+
   // create function that accepts the pet's mongo _id value as param and deletes the pet from the database
   const handleDeletePet = async (pet) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -45,6 +49,12 @@ const UserProfile = () => {
       console.error(err);
     }
   };
+
+  const handlePlaydateRequest = (petId, show) => {
+    setShowModal(show);
+    setSelectedPet(petId);
+  }
+
   // if data isn't here yet, say so
   if (!userData) {
     return <h2>LOADING...</h2>;
@@ -72,21 +82,27 @@ const UserProfile = () => {
                   <th scope="col">Type of Animal</th>
                   <th scope="col">Description</th>
                   <th scope="col">Favorite</th>
+                  <th scope="col">Request a playdate</th>
                 </tr>
               </thead>
               <tbody>
                 {userData.savedPets.map((pet) => {
                   return (
-                    <tr>
+                    <tr key={pet.petId}>
                       <th scope="row" >{pet.name}</th>
-                        <td className="w-25" key={pet.petId} onClick={() => navigateAnimal(pet.petId)}  >
-                          {pet.image ? <img src={pet.image} className="img-fluid img-thumbnail card-pics rounded-circle " alt={`The cover for ${pet.type}`} /> : null}
-                        </td>
+                      <td className="w-25" key={pet.petId} onClick={() => navigateAnimal(pet.petId)}  >
+                        {pet.image ? <img src={pet.image} className="img-fluid img-thumbnail card-pics rounded-circle " alt={`The cover for ${pet.type}`} /> : null}
+                      </td>
                       <td>Type: {pet.type}</td>
                       <td>{pet.description}</td>
                       <td>
                         <Button className='btn-block med-orange-bg' onClick={() => handleDeletePet(pet)}>
                           Unfavorite this Pal!
+                        </Button>
+                      </td>
+                      <td>
+                        <Button className='btn-block med-orange-bg' onClick={() => handlePlaydateRequest(pet.petId, true)}>
+                          Request Playdate
                         </Button>
                       </td>
                     </tr>
@@ -97,6 +113,21 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+      <Modal
+        size='lg'
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby='playdate-modal'>
+        {/* tab container to apply for playdate */}
+          <Modal.Header closeButton>
+            <Modal.Title id='playdate-modal'>
+              Playdate Request Form
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PlaydateRequestForm data={selectedPet} handleModalClose={() => setShowModal(false)} />
+          </Modal.Body>
+      </Modal>
     </>
   );
 };

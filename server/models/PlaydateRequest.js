@@ -2,27 +2,37 @@ const { Schema, model, default: mongoose } = require('mongoose');
 
 const playdateRequestSchema = new Schema(
     {
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
+        requester: {
+            type: String
         },
-        dateOfBirth: {
+        petId: {
+            type: String,
+        },
+        fromDate: {
             type: Date,
         },
-        driverLicense: {
-            type: String,
+        toDate: {
+            type: Date
         },
-        housingType: {
-            type: String
-        },
-        housingStatus: {
-            type: String,
-            enum: ['Rent', 'Own']
+        hasToddlers: {
+            type: Boolean
         }, 
-        housingComment: {
+        hasKids: {
+            type: Boolean
+        },
+        hasTeens: {
+            type: Boolean
+        }, 
+        hasOtherAdults: {
+            type: Boolean
+        }, 
+        animalsInfo: {
             type: String
         },
-        otherComment: {
+        homeInfo: {
+            type: String
+        },
+        reason: {
             type: String
         },
         approvalStatus: {
