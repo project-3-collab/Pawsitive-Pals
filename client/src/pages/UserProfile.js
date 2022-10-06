@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Jumbotron, Container, Button, Modal, Tab } from 'react-bootstrap';
+import { Jumbotron, Container, Button, Modal } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import PlaydateRequestForm from '../components/PlaydateRequest';
@@ -88,7 +88,7 @@ const UserProfile = () => {
               <tbody>
                 {userData.savedPets.map((pet) => {
                   return (
-                    <tr>
+                    <tr key={pet.petId}>
                       <th scope="row" >{pet.name}</th>
                       <td className="w-25" key={pet.petId} onClick={() => navigateAnimal(pet.petId)}  >
                         {pet.image ? <img src={pet.image} className="img-fluid img-thumbnail card-pics rounded-circle " alt={`The cover for ${pet.type}`} /> : null}
