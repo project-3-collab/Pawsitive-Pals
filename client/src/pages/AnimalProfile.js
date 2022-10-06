@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, Modal, Tab } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import PlaydateRequestForm from '../components/PlaydateRequest';
 import axios from 'axios';
 
@@ -38,6 +38,10 @@ export default function AnimalPage() {
     console.log(petData);
   }, [])
 
+  const handlePlaydateRequest = (show) => {
+    setShowModal(show);
+    setPetData(petData?.id);
+  }
   // return (
   //   <h1>{petData.name}</h1>
 
@@ -50,7 +54,7 @@ export default function AnimalPage() {
             <div class="col-lg-6">
               <div class="about-text go-to">
                 <h3 class="dark-color">About {petData?.name}</h3>
-                <h6>Type: {petData.type}</h6>
+                <h6>Type: {petData?.type}</h6>
                 <h6 class="theme-color lead">{petData?.contact?.address?.city}, {petData?.contact?.address?.state}</h6>
                 <p>{petData?.description}</p>
                 <div class="row about-list">
@@ -75,7 +79,7 @@ export default function AnimalPage() {
                   <div class="col-md-6">
                     <div class="media">
                       <label>Color</label>
-                      <p>{petData.colors?.primary}</p>
+                      <p>{petData?.colors?.primary}</p>
                     </div>
                     <div class="media">
                       <label>Gender</label>
@@ -94,7 +98,7 @@ export default function AnimalPage() {
                 <br></br>
               </div>
               <div>
-                <Button variant="primary" size='lg' onClick={() => setShowModal(true)}>
+                <Button variant="primary" size='lg' onClick={() => handlePlaydateRequest(true)}>
                   Request Playdate
                 </Button>
               </div>
@@ -140,20 +144,14 @@ export default function AnimalPage() {
         onHide={() => setShowModal(false)}
         aria-labelledby='playdate-modal'>
         {/* tab container to apply for playdate */}
-        <Tab.Container defaultActiveKey='requestPlaydate'>
           <Modal.Header closeButton>
             <Modal.Title id='playdate-modal'>
               Playdate Request Form
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Tab.Content>
-              <Tab.Pane eventKey='requestPlaydate'>
-                <PlaydateRequestForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-            </Tab.Content>
+            <PlaydateRequestForm handleModalClose={() => setShowModal(false)} />
           </Modal.Body>
-        </Tab.Container>
       </Modal>
     </>
   )

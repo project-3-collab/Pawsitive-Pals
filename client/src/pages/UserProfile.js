@@ -119,20 +119,14 @@ const UserProfile = () => {
         onHide={() => setShowModal(false)}
         aria-labelledby='playdate-modal'>
         {/* tab container to apply for playdate */}
-        <Tab.Container defaultActiveKey='requestPlaydate'>
           <Modal.Header closeButton>
             <Modal.Title id='playdate-modal'>
               Playdate Request Form
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Tab.Content>
-              <Tab.Pane eventKey='requestPlaydate'>
-                <PlaydateRequestForm data={selectedPet} handleModalClose={(pet) => setShowModal(false)} />
-              </Tab.Pane>
-            </Tab.Content>
+            <PlaydateRequestForm data={selectedPet} handleModalClose={() => setShowModal(false)} />
           </Modal.Body>
-        </Tab.Container>
       </Modal>
     </>
   );

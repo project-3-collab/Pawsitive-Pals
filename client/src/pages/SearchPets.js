@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-import { Nav, Modal, Tab } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 // import { Routes, Route, useNavigate } from 'react-router-dom';
 // import SignUpForm from './SignupForm';
