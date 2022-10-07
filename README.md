@@ -1,4 +1,4 @@
-# PAWSitive Pets
+# PAWSitive Pals
 ​
 ## Table of contents
 ​
