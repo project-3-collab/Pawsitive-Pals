@@ -42,10 +42,7 @@ export default function AnimalPage() {
     setShowModal(show);
     setPetData(petData?.id);
   }
-  // return (
-  //   <h1>{petData.name}</h1>
 
-  // )
   return (
     <>
       <section class="section about-section gray-bg" id="about">
@@ -113,24 +110,30 @@ export default function AnimalPage() {
             <div class="row">
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                  <h6 class="count h2" data-to="500" data-speed="500">500</h6>
-                  <p class="m-0px font-w-600">Views</p>
+                  <h6 class="count h2" data-to="500" data-speed="500">{petData.attributes.house_trained ? `Yes`
+                    : 'No'}</h6>
+                  <p class="m-0px font-w-600">House Trained</p>
                 </div>
               </div>
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                  <h6 class="count h2" data-to="150" data-speed="150">150</h6>
-                  <p class="m-0px font-w-600">Happy Dates</p>
+                  <h6 class="count h2" data-to="150" data-speed="150">{petData.attributes.shots_current ? `Yes`
+                    : 'No'}</h6>
+                  <p class="m-0px font-w-600">Shots Current</p>
                 </div>
               </div>
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                <h6 class="count h2" data-to="850" data-speed="850">Schedule Date</h6>
+                  <h6 class="count h2" data-to="850" data-speed="850">{petData.attributes.spayed_neutered ? `Yes`
+                    : 'No'}</h6>
+                  <p class="m-0px font-w-600">Spayed/Neutered</p>
                 </div>
               </div>
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                  <h6 class="count h2" data-to="190" data-speed="190">Favorite</h6>
+                  <h6 class="count h2" data-to="190" data-speed="190">{petData.distance ? `${petData.distance} miles away`
+                    : '--'}</h6>
+                  <p class="m-0px font-w-600">Distance</p>
                 </div>
               </div>
             </div>
@@ -144,14 +147,14 @@ export default function AnimalPage() {
         onHide={() => setShowModal(false)}
         aria-labelledby='playdate-modal'>
         {/* tab container to apply for playdate */}
-          <Modal.Header closeButton>
-            <Modal.Title id='playdate-modal'>
-              Playdate Request Form
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <PlaydateRequestForm handleModalClose={() => setShowModal(false)} />
-          </Modal.Body>
+        <Modal.Header closeButton>
+          <Modal.Title id='playdate-modal'>
+            Playdate Request Form
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <PlaydateRequestForm handleModalClose={() => setShowModal(false)} />
+        </Modal.Body>
       </Modal>
     </>
   )
