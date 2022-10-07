@@ -55,13 +55,13 @@ THEN I can plan another playdate with a different animal, plan for an adoption, 
 ​
 Below is a screenshot showing a search for cat paw pals:
 
-[search results of cats](./client/public/searchDemoScreenshot.png)
+![search results of cats](./client/public/searchDemoScreenshot.png)
 
 Below is a screenshot showing a list of favorite animals saved by a user:
-[user's saved pets](./client/public/savedPetsDemoScreenshot.png)
+![user's saved pets](./client/public/savedPetsDemoScreenshot.png)
 
 Below is a screenshot showing the playdate request form:
-[screenshot of playdate request form](./client/public/playdateRequestFormScreenshot.png)
+![screenshot of playdate request form](./client/public/playdateRequestFormScreenshot.png)
 ​
 ### Deployment
 ​
