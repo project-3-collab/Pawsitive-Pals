@@ -1,5 +1,5 @@
 {
-  "name": "googlebooks-app",
+  "name": "pawsitive-pals-app",
   "version": "1.0.0",
   "description": "## Description",
   "main": "server/server.js",
@@ -77,10 +77,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dnsnguy08/search_for_books.git"
+    "url": "git+https://https://github.com/project-3-collab/Pawsitive-Pals.git"
   },
   "bugs": {
-    "url": "https://github.com/dnsnguy08/search_for_books/issues"
+    "url": "https://https://github.com/project-3-collab/Pawsitive-Pals/issues"
   },
-  "homepage": "https://github.com/dnsnguy08/search_for_books#readme"
+  "homepage": "https://https://github.com/project-3-collab/Pawsitive-Pals#readme"
 }
