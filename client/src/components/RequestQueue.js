@@ -35,29 +35,6 @@ const RequestQueue = () => {
                 </ListGroup>
             </div>
 
-<<<<<<< HEAD
-  //this is to pull up the accepted or denied reques from local storage
-  //const pullApproved = function() {
-   
-  
-
-//   return (
-//     <div>
-//       <h1>Pawsitive Pals Requests</h1>
-//       <container>View Individual Requests</container>
-//       <ul>Open Requests</ul>
-//       <li>Request 1</li>
-//       <li>Request 2</li>
-//       <li>Request 3</li>
-//       <li>Request 4</li>
-//       <li>Request 5</li>
-//       <button>View Approved</button>
-//       <button>View Denied</button>
-//       </div>
-//   )
-// }
-// export default RequestQueue;
-=======
             {/* list of approved requests */}
             <div>
                 <h4>Approved Requests</h4>
@@ -95,5 +72,4 @@ const RequestQueue = () => {
     )
 }
 export default RequestQueue;
->>>>>>> 39a60692cd75de1d654da926d2f6dda5128a650c
 
