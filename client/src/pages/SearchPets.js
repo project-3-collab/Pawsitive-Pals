@@ -8,7 +8,7 @@ import iconHeartEmpty from "../assets/icons8-favorite-EMPTY.png"
 import { useMutation } from '@apollo/client';
 import { searchPetfinder } from '../utils/API';
 import Auth from '../utils/auth';
-import { getSavedPetIds, savePetIds } from '../utils/localStorage';
+import { getSavedPetIds, savePetIds, removePetId } from '../utils/localStorage';
 import { ADD_PET } from '../utils/mutations';
 import { DELETE_PET } from '../utils/mutations';
 
@@ -117,6 +117,7 @@ const SearchPets = () => {
         });
         console.log(petData)
       }
+      
       else if (likeAnimal === true) {
         const deletePetData = await deletePet({
           variables: { ...petToSave },
@@ -136,7 +137,7 @@ const SearchPets = () => {
   // const navigateAnimal = (petId) => {
     //   navigate(`/animal/${petId}`);
     // };
-    const [ isClick, setClick ] = useState(false);
+    // const [ isClick, setClick ] = useState(false);
   return (
     <>
       <Jumbotron fluid className='text-light yellow-bg'>
