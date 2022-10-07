@@ -40,7 +40,8 @@ export default function AnimalPage() {
 
   const handlePlaydateRequest = (show) => {
     setShowModal(show);
-    setPetData(petData?.id);
+    // commented out so that the animalProfile page doesn't clear
+    // setPetData(petData?.id);
   }
 
   return (
