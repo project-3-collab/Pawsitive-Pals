@@ -60,14 +60,13 @@ export const ADD_PET = gql`
 `;
 
 export const DELETE_PET = gql`
-    mutation DeletePet($id: ID!) {
-        deletePet(_id: $id) {
+    mutation DeletePet($petId: String!) {
+        deletePet(petId: $petId) {
             _id
             username
             savedPets {
-                _id
                 petId
-                description
+
             }
         }
     }

@@ -42,7 +42,10 @@ const SearchPets = () => {
   const [searchInput, setSearchInput] = useState('');
   // create state to hold saved petId values
   const [savedPetIds, setSavedPetIds] = useState(getSavedPetIds());
-  const [addPet] = useMutation(ADD_PET)
+  const [addPet] = useMutation(ADD_PET);
+
+
+  const [likeAnimal, setLikeAnimal] = useState(false);
   const [deletePet] = useMutation(DELETE_PET)
   // set up useEffect hook to save `savedPetIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -87,6 +90,10 @@ const SearchPets = () => {
       console.error(err);
     }
   };
+
+  const toggleLikeBtn = () => {
+    setLikeAnimal(current => !current);
+  };
   // create function to handle saving a pet to our database
   const handleSavePet = async (petId) => {
     
@@ -102,19 +109,25 @@ const SearchPets = () => {
       return false;
     }
 
-    if (savedPetIds?.some((savedPetId) => savedPetId === pet.petId)) {
-        const petData = await deletePet({
-        variables: { ...petToSave },
-    }
-
 
     try {
-      const petData = await addPet({
-        variables: { ...petToSave },
-      });
-      console.log(petData)
+      if (likeAnimal === false) {
+        const petData = await addPet({
+          variables: { ...petToSave },
+        });
+        console.log(petData)
+      }
+      else if (likeAnimal === true) {
+        const deletePetData = await deletePet({
+          variables: { ...petToSave },
+        });
+        console.log(deletePetData)
+
+      }
       // if pet successfully saves to user's account, save pet id to state
       setSavedPetIds([...savedPetIds, petToSave.petId]);
+      toggleLikeBtn();
+
     } catch (err) {
       console.error(err);
     }
@@ -179,7 +192,9 @@ const SearchPets = () => {
                       <Button
                         // disabled={savedPetIds?.some((savedPetId) => savedPetId === pet.petId)}
                         className='iconHeartEmpty'
-                        onClick={() => handleSavePet(pet.petId)}>
+                        onClick={() => {handleSavePet(pet.petId);
+    
+                        }}>
                         {/* {savedPetIds?.some((savedPetId) => savedPetId === pet.petId)
                           ? 'This pet has already been saved!'
                           : 'Save this Pet!'} */}

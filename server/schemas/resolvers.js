@@ -64,17 +64,24 @@ const resolvers = {
 
     },
 
-    deletePet: async (parent, { _id }, context) => {
+    deletePet: async (parent, { petId }, context) => {
 
-      if (context.user) {
-        return await User.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $pull: { savedPets: { _id:_id } }
-          },
-          { new: true }
-        );
+      try {
+        
+        // if (context.user) {
+          return await User.findOneAndUpdate(
+            { _id: "633b66cedf65adea71dc2296" },
+            {
+              $pull: { savedPets: petId }
+            },
+            { new: true }
+          );
+        // }
+      } catch (error) {
+        console.log(error);
+        
       }
+
 
       throw new AuthenticationError('You need to be logged in!');
 

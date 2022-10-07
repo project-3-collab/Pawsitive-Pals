@@ -83,7 +83,7 @@ const typeDefs = gql`
   type Mutation {
     createUser(username: String!, email: String!, password: String!, admin: Boolean!, firstname: String, lastname: String, license: String, age: Int, birthdate: String, phone: String, experience: String, housing: String, address: String, city: String, state: String, zipcode: String, country: String ): Auth
     savePet(name: String, description: String, petId: Float!, image: String, link: String, type: String!): User
-    deletePet(_id: ID!): User
+    deletePet(petId: String!): User
     login(email: String!, password: String!): Auth
     submitRequest(input: PlaydateRequestInput): User
   }

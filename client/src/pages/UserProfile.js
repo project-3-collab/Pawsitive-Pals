@@ -17,6 +17,7 @@ const UserProfile = () => {
   const { data } = useQuery(QUERY_USER, {
     variables: { _id: Auth.getProfile().data._id }
   });
+  console.log(data);
   const [deletePet] = useMutation(DELETE_PET);
   const userData = data?.user;
   const [show, setShow] = useState(false);
