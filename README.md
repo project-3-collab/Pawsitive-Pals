@@ -1,4 +1,4 @@
-# PAWSitive Pets
+# PAWSitive Pals
 ​
 ## Table of contents
 ​
@@ -108,7 +108,7 @@ Although we are proud of what we have made, there are still more room for improv
 ​
 - Portfolio
   - [Dennis Nguyen]() 
-  - [Nifer Kilakila]()
+  - [Nifer Kilakila](https://nanifer.github.io/Nifer-Kilakila-Portfolio-in-React/)
   - [Lillian Kim](https://liliankim.github.io/homework-2/)
   - [Adriane Ocampo](https://ocampoad.github.io/Adriane_Ocampo_Portfolio/)
   - [Monineath Sar](https://monineathsar.github.io/My_Portfolio-Challenge2/)

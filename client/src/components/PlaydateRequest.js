@@ -68,6 +68,7 @@ const PlaydateRequest = (props) => {
             await submitRequest({
                 variables: { input: input }
             });
+
         } catch(err) {
             console.log(err);
             setShowAlert(true);

@@ -40,7 +40,8 @@ export default function AnimalPage() {
 
   const handlePlaydateRequest = (show) => {
     setShowModal(show);
-    setPetData(petData?.id);
+    // commented out so that the animalProfile page doesn't clear
+    // setPetData(petData?.id);
   }
 
   return (
@@ -95,7 +96,7 @@ export default function AnimalPage() {
                 <br></br>
               </div>
               <div>
-                <Button variant="primary" size='lg' onClick={() => handlePlaydateRequest(true)}>
+                <Button className='med-orange-bg' size='lg' onClick={() => handlePlaydateRequest(true)}>
                   Request Playdate
                 </Button>
               </div>
@@ -110,28 +111,28 @@ export default function AnimalPage() {
             <div class="row">
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                  <h6 class="count h2" data-to="500" data-speed="500">{petData.attributes.house_trained ? `Yes`
+                  <h6 class="count h2" data-to="500" data-speed="500">{petData?.attributes?.house_trained ? `Yes`
                     : 'No'}</h6>
                   <p class="m-0px font-w-600">House Trained</p>
                 </div>
               </div>
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                  <h6 class="count h2" data-to="150" data-speed="150">{petData.attributes.shots_current ? `Yes`
+                  <h6 class="count h2" data-to="150" data-speed="150">{petData?.attributes?.shots_current ? `Yes`
                     : 'No'}</h6>
                   <p class="m-0px font-w-600">Shots Current</p>
                 </div>
               </div>
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                  <h6 class="count h2" data-to="850" data-speed="850">{petData.attributes.spayed_neutered ? `Yes`
+                  <h6 class="count h2" data-to="850" data-speed="850">{petData?.attributes?.spayed_neutered ? `Yes`
                     : 'No'}</h6>
                   <p class="m-0px font-w-600">Spayed/Neutered</p>
                 </div>
               </div>
               <div class="col-6 col-lg-3">
                 <div class="count-data text-center">
-                  <h6 class="count h2" data-to="190" data-speed="190">{petData.distance ? `${petData.distance} miles away`
+                  <h6 class="count h2" data-to="190" data-speed="190">{petData?.distance ? `${petData?.distance} miles away`
                     : '--'}</h6>
                   <p class="m-0px font-w-600">Distance</p>
                 </div>
