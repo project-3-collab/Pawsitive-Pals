@@ -95,7 +95,7 @@ export default function AnimalPage() {
                 <br></br>
               </div>
               <div>
-                <Button variant="primary" size='lg' onClick={() => handlePlaydateRequest(true)}>
+                <Button className='med-orange-bg' size='lg' onClick={() => handlePlaydateRequest(true)}>
                   Request Playdate
                 </Button>
               </div>

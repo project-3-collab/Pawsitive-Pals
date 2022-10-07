@@ -190,6 +190,7 @@ mark {
 .card-pics {
   width: 150px;
   height: 150px;
+  min-width: 150px;
   object-fit: cover;
 }
 
