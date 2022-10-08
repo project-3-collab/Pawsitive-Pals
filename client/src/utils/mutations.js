@@ -129,6 +129,22 @@ export const PROCESS_APPLICATION = gql`
     mutation ProcessApplication($id: ID!, $approvalStatus: Int!) {
         processApplication(_id: $id, approvalStatus: $approvalStatus) {
             _id
+            requester
+            pet {
+                petId
+                name
+                type
+            }
+            fromDate
+            toDate
+            hasToddlers
+            hasKids
+            hasTeens
+            hasOtherAdults
+            animalsInfo
+            homeInfo
+            reason
+            approvalStatus
         }
     }
 `;

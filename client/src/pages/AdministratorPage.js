@@ -8,21 +8,17 @@ import { useMutation } from '@apollo/client';
 import { FETCH_REQUESTER } from '../utils/mutations';
 
 const AdministratorRequests = () => {
-  const [selectRequest, setSelectRequest] = useState({});
-  const handleAcceptRequest = () => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-  }
+  const [requestInfo, setRequestInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
+  const [petInfo, setPetInfo] = useState({});
 
   const [fetchRequester] = useMutation(FETCH_REQUESTER);
 
-  const handleDenyRequest = () => {
-
-  }
-
   const onSelectRequest = async (request) => {
     const user = await fetchRequester({variables: {username: request.requester}});
-    const updatedRequest = {...request, user: user.data.requester};
-    setSelectRequest(updatedRequest);
+    setUserInfo(user.data.requester);
+    setRequestInfo(request);
+    setPetInfo(request.pet);
   }
 
   return (
@@ -34,7 +30,7 @@ const AdministratorRequests = () => {
 
       <Row>
         <Col sm={7}>
-          <ViewRequest data={selectRequest} />
+          <ViewRequest userInfo={userInfo} requestInfo={requestInfo} petInfo={petInfo}/>
         </Col>
         <Col sm={5}>
           <RequestQueue onSelectRequest={onSelectRequest}/>

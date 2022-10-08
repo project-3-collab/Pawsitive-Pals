@@ -115,7 +115,7 @@ const resolvers = {
       return await User.findOne({ username: username});
     },
     processApplication: async (parent, {_id, approvalStatus}) => {
-      return  await PlaydateRequest.findOneAndUpdate({_id: _id, approvalStatus: approvalStatus});
+      return  await PlaydateRequest.findOneAndUpdate({_id: _id}, {approvalStatus: approvalStatus});
     }  
 }}
 
