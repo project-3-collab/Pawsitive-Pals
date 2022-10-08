@@ -1,5 +1,5 @@
 //request queue on sidebar that shows pending requests, approved and denied requests
-import ListGroup from 'react-bootstrap/ListGroup';
+import { ListGroup, Col } from 'react-bootstrap';
 
 const RequestQueue = () => {
 
@@ -19,7 +19,7 @@ const RequestQueue = () => {
     return (
         <>
             {/* list of pending requests */}
-            <div>
+            <Col>
                 <h4>Pending Requests</h4>
                 <ListGroup as="ol">
                     <ListGroup.Item
@@ -33,10 +33,10 @@ const RequestQueue = () => {
                         </div>
                     </ListGroup.Item>
                 </ListGroup>
-            </div>
+            </Col>
 
             {/* list of approved requests */}
-            <div>
+            <Col>
                 <h4>Approved Requests</h4>
                 <ListGroup as="ol">
                     <ListGroup.Item
@@ -50,10 +50,10 @@ const RequestQueue = () => {
                         </div>
                     </ListGroup.Item>
                 </ListGroup>
-            </div>
+            </Col>
 
             {/* list of denied requests */}
-            <div>
+            <Col>
                 <h4>Denied Requests</h4>
                 <ListGroup as="ol">
                     <ListGroup.Item
@@ -67,7 +67,7 @@ const RequestQueue = () => {
                         </div>
                     </ListGroup.Item>
                 </ListGroup>
-            </div>
+            </Col>
         </>
     )
 }

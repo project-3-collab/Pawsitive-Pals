@@ -248,9 +248,9 @@ const SignupForm = () => {
             value={userFormData.housing}
             name='housing'
             onChange={handleInputChange}>
-            <option value="field1">Home owner</option>
-            <option value="field2">Apartment renter</option>
-            <option value="field3">Homeless</option>
+            <option value="field1">Owner</option>
+            <option value="field2">Renter</option>
+            <option value="field3">Other</option>
           </Form.Control>
         </Form.Group>
         <Form.Group>
