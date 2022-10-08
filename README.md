@@ -16,9 +16,8 @@
 - [Acknowledgments](#acknowledgments)
 ​​
 ## Overview
+This project was aimed to collaboratively design and build an Interactive MERN Stack Single-Page Application. A pet playdate application was designed and created using MongDB back end, GraphQL, Express, Node, React and JWT
 
-
-​
 ### The challenge
 ​
 This is a collaborative project to create a real world full stack application by showcasing skills we have acquired so far in our coding bootcamp. This project aims to provide people with practical application using GraphQL with Node.js and Express.js to create a MERN-stack single-page application. This application also requires the usage of React, MongoDB, Mongoose ODM, and JWT as an authentication middleware.
@@ -69,7 +68,12 @@ Below is a screenshot showing the playdate request form:
 - Github repository [Github](https://github.com/project-3-collab/Pawsitive-Pals)
 ​
 ## Our process
-​
+We started with being proactive in brainstorming a few ideas. Once we ​figured out with what kind of 
+app we wanted to build we immediately started a wireframe. From there we designed each page that we 
+wanted to include in our app, made a checklist of all items we needed to complete and started to delegate
+each task to a team member. We constantly checked in with each other and discussed the best ways in which we could complete our tasks. We continued to monitor each other's progress and updated our wireframe througout the process as the mechanics behind our project beceame more clear. Most of the back end was created first and then the front end was completed afterwards. 
+
+
 ### Built with
 ​
 - GraphQL
