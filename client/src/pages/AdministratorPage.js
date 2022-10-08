@@ -15,14 +15,16 @@ const AdministratorRequests = () => {
   return (
     <>
 
+      <Container style={{ color: "black" }}>
+        <h1 className='text-center'>Viewing Playdate Requests</h1>
+      </Container>
+
       <Row>
         <Col sm={7}>
           <ViewRequest />
         </Col>
         <Col sm={5}>
-          <Row>
-            <RequestQueue />
-          </Row>
+          <RequestQueue />
         </Col>
       </Row>
 
