@@ -49,7 +49,7 @@ function App() {
               element={<AdministratorRequests/>}
             /> */}
             <Route
-              path='/admin/requests'
+              path='/admin'
               element={<AdminRequestPage />}
             />
             <Route
