@@ -1,7 +1,6 @@
 {/* use map function to import?/*}
 
-
-{/* event handler for buttons*/}
+{/* event handler for accept and reject buttons*/}
 
 const approveButton = () => {
 
