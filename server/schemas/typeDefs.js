@@ -43,7 +43,7 @@ const typeDefs = gql`
   type PlaydateRequest {
     _id: ID!
     requester: String
-    petId: String
+    pet: Pet
     fromDate: String
     toDate: String
     hasToddlers: Boolean
@@ -67,7 +67,7 @@ const typeDefs = gql`
   }
 
   input PlaydateRequestInput {
-    petId: String!
+    petInput: PetInput!
     fromDate: String
     toDate: String
     hasToddlers: Boolean
@@ -80,11 +80,15 @@ const typeDefs = gql`
     approvalStatus: Int
   }
 
+  input PetInput {
+    name: String
+    petId: Float!
+    type: String!
+  }
+
   type Query {
     user: User
     playdateRequests: [PlaydateRequest]
-    playdateRequest(playdateId: ID!) : PlaydateRequest
-    
   }
 
   type Mutation {
@@ -93,7 +97,10 @@ const typeDefs = gql`
     deletePet(_id: ID!): User
     login(email: String!, password: String!): Auth
     submitRequest(input: PlaydateRequestInput): PlaydateRequest
-    validatePlaydateRequest(petId: String!, approvalStatus: Int!): Boolean!
+    validatePlaydateRequest(petInput: PetInput!, approvalStatus: Int!): Boolean!
+    playdateRequest(playdateId: ID!) : PlaydateRequest
+    requester(username: String!): User 
+    processApplication(_id: ID!, approvalStatus: Int!): PlaydateRequest
   }
 `;
 

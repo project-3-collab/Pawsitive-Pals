@@ -1,13 +1,13 @@
 const { Schema, model, default: mongoose } = require('mongoose');
+// import schema from Pet.js
+const petSchema = require('./Pet');
 
 const playdateRequestSchema = new Schema(
     {
         requester: {
             type: String
         },
-        petId: {
-            type: String,
-        },
+        pet: petSchema,
         fromDate: {
             type: Date,
         },
@@ -40,5 +40,5 @@ const playdateRequestSchema = new Schema(
         }
     });
 
-const PlaydateRequest = model('PlaydateRequest', playdateRequestSchema)
+const PlaydateRequest = model('PlaydateRequest', playdateRequestSchema);
 module.exports = PlaydateRequest

@@ -43,7 +43,7 @@ const PlaydateRequest = (props) => {
 
         try {
             const response = await validatePlaydateRequest({
-                variables: {petId: String(props.data), approvalStatus: 0}
+                variables: {petInput: props.data, approvalStatus: 0}
             })
     
             if (response.data.validatePlaydateRequest) {
@@ -52,7 +52,7 @@ const PlaydateRequest = (props) => {
             }
     
             const input = {
-                petId: String(props.data),
+                petInput: props.data,
                 fromDate: startDate,
                 toDate: endDate,
                 hasToddlers: enviornmentCheckbox[0],
@@ -69,6 +69,7 @@ const PlaydateRequest = (props) => {
                 variables: { input: input }
             });
 
+            props.handleModalClose();
         } catch(err) {
             console.log(err);
             setShowAlert(true);

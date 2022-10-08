@@ -248,9 +248,9 @@ const SignupForm = () => {
             value={userFormData.housing}
             name='housing'
             onChange={handleInputChange}>
-            <option value="field1">Owner</option>
-            <option value="field2">Renter</option>
-            <option value="field3">Other</option>
+            <option value="Owner">Owner</option>
+            <option value="Renter">Renter</option>
+            <option value="Other">Other</option>
           </Form.Control>
         </Form.Group>
         <Form.Group>
@@ -260,11 +260,11 @@ const SignupForm = () => {
             value={userFormData.experience}
             name='experience'
             onChange={handleInputChange}>
-            <option value="field1">No experience</option>
-            <option value="field2">0-2 years</option>
-            <option value="field3">2-5 years</option>
-            <option value="field4">5-10 years</option>
-            <option value="field5">10+ years</option>
+            <option value="No experience">No experience</option>
+            <option value="0-2 years">0-2 years</option>
+            <option value="2-5 years">2-5 years</option>
+            <option value="5-10 years">5-10 years</option>
+            <option value="10+ years">10+ years</option>
           </Form.Control>
         </Form.Group>
         {/* <Form.Group>

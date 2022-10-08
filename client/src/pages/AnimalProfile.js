@@ -8,8 +8,9 @@ export default function AnimalPage() {
   const [showModal, setShowModal] = useState(false);
   const { petId } = useParams();
   const [petData, setPetData] = useState({});
+  const [selectedPet, setSelectedPet] = useState({});
+
   useEffect(() => {
-    console.log('inside useEffect');
     const queryPetId = async (petId) => {
       try {
         const tokenData = await axios.post(
@@ -27,7 +28,6 @@ export default function AnimalPage() {
         })
         // const data = await response.json();
         // return response.data;
-        console.log(response.data);
         setPetData(response.data.animal);
       } catch (err) {
         console.log(err);
@@ -35,13 +35,15 @@ export default function AnimalPage() {
     };
     queryPetId(petId);
     // const petData = queryPetId(petId);
-    console.log(petData);
   }, [])
 
   const handlePlaydateRequest = (show) => {
     setShowModal(show);
+
     // commented out so that the animalProfile page doesn't clear
     // setPetData(petData?.id);
+
+    setSelectedPet({petId: petData?.id, name: petData?.name, type: petData?.type})
   }
 
   return (
@@ -148,14 +150,14 @@ export default function AnimalPage() {
         onHide={() => setShowModal(false)}
         aria-labelledby='playdate-modal'>
         {/* tab container to apply for playdate */}
-        <Modal.Header closeButton>
-          <Modal.Title id='playdate-modal'>
-            Playdate Request Form
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <PlaydateRequestForm handleModalClose={() => setShowModal(false)} />
-        </Modal.Body>
+          <Modal.Header closeButton>
+            <Modal.Title id='playdate-modal'>
+              Playdate Request Form
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PlaydateRequestForm data={selectedPet} handleModalClose={() => setShowModal(false)} />
+          </Modal.Body>
       </Modal>
     </>
   )
