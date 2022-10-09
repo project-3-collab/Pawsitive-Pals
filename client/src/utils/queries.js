@@ -37,13 +37,22 @@ export const QUERY_PET = gql`
 export const QUERY_PLAYDATES = gql`
 query Playdates {
   playdateRequests {
-    petId
+    _id
+    requester
+    pet {
+      name
+      petId
+      type
+    }
     fromDate
     toDate
-    housingType
-    housingStatus
-    housingComment
-    otherComment
+    hasToddlers
+    hasKids
+    hasTeens
+    hasOtherAdults
+    animalsInfo
+    homeInfo
+    reason
     approvalStatus
   }
 }
@@ -52,7 +61,12 @@ query Playdates {
 export const QUERY_SINGLE_PLAYDATE = gql`
 query SinglePlaydate ($playdateId:ID!) {
   playdateRequest (playdateId: $playdateId) {
-    petId
+    _id
+    pet {
+      name
+      petId
+      type
+    }
     fromDate
     toDate
     housingType

@@ -9,11 +9,10 @@ const resolvers = {
     },
     //check the context (make sure only admin can see)
     playdateRequests: async (parent, args,context) => {
-      return await PlaydateRequest.find();
+      const response = await PlaydateRequest.find();
+      return response;
     },
-    playdateRequest: async (parent, args, context) => {
-      return await PlaydateRequest.findOne({_id: args.playdateId});
-    }
+    
   },
 
   Mutation: {
@@ -81,9 +80,15 @@ const resolvers = {
 
     submitRequest: async (parent, args, context) => {
       if (context.user) {
+        console.log(context.user);
         const playdateRequest = await PlaydateRequest.create({
           ...args.input,
-          requester: context.user.username,
+          pet: {
+            name: args.input.petInput.name,
+            petId: args.input.petInput.petId,
+            type: args.input.petInput.type
+          },
+          requester: context.user.username
         });
         
         await User.findOneAndUpdate(
@@ -99,17 +104,19 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    validatePlaydateRequest: async (parent, {petId, approvalStatus}, context) => {
+    validatePlaydateRequest: async (parent, {petInput, approvalStatus}, context) => {
       if (context.user) {
-        console.log("Requesting");
-        const response = await PlaydateRequest.findOne({petId: petId, approvalStatus: approvalStatus, requester: context.user.username});
-        console.log("Success");
+        const response = await PlaydateRequest.findOne({"pet.petId": petInput.petId, approvalStatus: approvalStatus, requester: context.user.username});
         return response !== null;
       }
-
       throw new AuthenticationError('You need to be logged in!');
-    }
-  }
-};
+    },
+    requester: async (parent, {username}) => {
+      return await User.findOne({ username: username});
+    },
+    processApplication: async (parent, {_id, approvalStatus}) => {
+      return  await PlaydateRequest.findOneAndUpdate({_id: _id}, {approvalStatus: approvalStatus});
+    }  
+}}
 
 module.exports = resolvers;

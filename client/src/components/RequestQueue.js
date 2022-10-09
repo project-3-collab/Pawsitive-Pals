@@ -1,73 +1,110 @@
 //request queue on sidebar that shows pending requests, approved and denied requests
-import ListGroup from 'react-bootstrap/ListGroup';
+import { useQuery } from '@apollo/client';
+import { ListGroup, Col, Tab, Tabs } from 'react-bootstrap';
+import { QUERY_PLAYDATES } from '../utils/queries';
 
-const RequestQueue = () => {
+const RequestQueue = (props) => {
 
-    const ClickSingleRequest = (event) => {
-        console.log('clicked');
+    const {loading, data } = useQuery(QUERY_PLAYDATES);
+
+    const viewSingleRequest = (request) => {
+        props.onSelectRequest(request);
     }
 
-    const ClickViewApproved = (event) => {
-        console.log('AllApproved');
-
-        const ClickViewDenied = (event) => {
-            console.log('AllDenied');
-        }
-
+    // if data isn't here yet, say so
+    if (loading) {
+        return <h2>LOADING...</h2>;
     }
 
     return (
         <>
-            {/* list of pending requests */}
-            <div>
-                <h4>Pending Requests</h4>
+            <Tabs
+                defaultActiveKey="pending"
+                id="fill-tab-example"
+                className="mb-3"
+                justify>
+                <Tab eventKey="pending" title="Pending">
+                    <ListGroup as="ol">
+                        {data.playdateRequests.filter((request) => request.approvalStatus == 0).map((request) => {
+                            return (
+                                <ListGroup.Item
+                                as="li"
+                                className="d-flex justify-content-between align-items-start"
+                                action variant="warning"
+                                key={request._id}
+                                onClick={() => viewSingleRequest(request)}>
+
+                                <div className="ms-2 me-auto">
+                                    <div className="fw-bold">{request.requester}</div>
+                                    {request.pet.name} ({request.pet.petId}, {request.pet.type})
+                                </div>
+                                </ListGroup.Item>
+                                )
+                            })
+                        }
+                        
+                    </ListGroup>
+                </Tab>
+                <Tab eventKey="approved" title="Approved">
+                    <ListGroup as="ol">
+                        {data.playdateRequests.filter((request) => request.approvalStatus == 1).map((request) => {
+                            return (
+                                <ListGroup.Item
+                                as="li"
+                                className="d-flex justify-content-between align-items-start"
+                                action variant="success"
+                                key={request._id}
+                                onClick={() => viewSingleRequest(request)}>
+                                
+                                <div className="ms-2 me-auto">
+                                    <div className="fw-bold">{request.requester}</div>
+                                    {request.pet.name} ({request.pet.petId}, {request.pet.type})
+                                </div>
+                                </ListGroup.Item>
+                                )
+                            })
+                        }
+                    </ListGroup>
+                </Tab>
+                <Tab eventKey="denied" title="Denied">
                 <ListGroup as="ol">
-                    <ListGroup.Item
-                        as="li"
-                        className="d-flex justify-content-between align-items-start"
-                        action variant="warning"
-                    >
-                        <div className="ms-2 me-auto">
-                            <div className="fw-bold">Username</div>
-                            Pet Name (Pet ID, Pet type)
-                        </div>
-                    </ListGroup.Item>
+                        {data.playdateRequests.filter((request) => request.approvalStatus == 2).map((request) => {
+                            return (
+                                <ListGroup.Item
+                                as="li"
+                                className="d-flex justify-content-between align-items-start"
+                                action variant="danger"
+                                key={request._id}
+                                onClick={() => viewSingleRequest(request)}>
+
+                                <div className="ms-2 me-auto">
+                                    <div className="fw-bold">{request.requester}</div>
+                                    {request.pet.name} ({request.pet.petId}, {request.pet.type})
+                                </div>
+                                </ListGroup.Item>
+                                )
+                            })
+                        }
                 </ListGroup>
-            </div>
+                </Tab>
+            </Tabs>
+            {/* list of pending requests */}
+            {/* <Col>
+                <h4>Pending Requests</h4>
+
+            </Col> */}
 
             {/* list of approved requests */}
-            <div>
+            {/* <Col>
                 <h4>Approved Requests</h4>
-                <ListGroup as="ol">
-                    <ListGroup.Item
-                        as="li"
-                        className="d-flex justify-content-between align-items-start"
-                        action variant="success"
-                    >
-                        <div className="ms-2 me-auto">
-                            <div className="fw-bold">Username</div>
-                            Pet Name (Pet ID, Pet type)
-                        </div>
-                    </ListGroup.Item>
-                </ListGroup>
-            </div>
+
+            </Col> */}
 
             {/* list of denied requests */}
-            <div>
+            {/* <Col>
                 <h4>Denied Requests</h4>
-                <ListGroup as="ol">
-                    <ListGroup.Item
-                        as="li"
-                        className="d-flex justify-content-between align-items-start"
-                        action variant="danger"
-                    >
-                        <div className="ms-2 me-auto">
-                            <div className="fw-bold">Username</div>
-                            Pet Name (Pet ID, Pet type)
-                        </div>
-                    </ListGroup.Item>
-                </ListGroup>
-            </div>
+                
+            </Col> */}
         </>
     )
 }

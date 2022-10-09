@@ -78,7 +78,11 @@ export const SUBMIT_REQUEST = gql`
         submitRequest(input: $input) {
             _id
             requester
-            petId
+            pet {
+                petId
+                name
+                type
+            }
             fromDate
             toDate
             hasToddlers
@@ -94,7 +98,53 @@ export const SUBMIT_REQUEST = gql`
 `;
 
 export const VALIDATE_PLAYDATE_REQUEST = gql`
-    mutation ValidatePlaydateRequest($petId: String!, $approvalStatus: Int!) {
-        validatePlaydateRequest (petId: $petId, approvalStatus: $approvalStatus)
+    mutation ValidatePlaydateRequest($petInput: PetInput!, $approvalStatus: Int!) {
+        validatePlaydateRequest (petInput: $petInput, approvalStatus: $approvalStatus)
+    }
+`;
+
+export const FETCH_REQUESTER = gql`
+    mutation Requester($username: String!) {
+        requester(username: $username) {
+            _id
+            username
+            firstname
+            lastname
+            email
+            phone
+            license
+            address
+            city
+            state
+            zipcode
+            country
+            housing
+            experience
+                  
+        }
+    }
+`;
+
+export const PROCESS_APPLICATION = gql`
+    mutation ProcessApplication($id: ID!, $approvalStatus: Int!) {
+        processApplication(_id: $id, approvalStatus: $approvalStatus) {
+            _id
+            requester
+            pet {
+                petId
+                name
+                type
+            }
+            fromDate
+            toDate
+            hasToddlers
+            hasKids
+            hasTeens
+            hasOtherAdults
+            animalsInfo
+            homeInfo
+            reason
+            approvalStatus
+        }
     }
 `;
